@@ -1,0 +1,10 @@
+node_modules
+.env
+.DS_Store
+build
+dist
+secrets
+secret 
+creds
+cred 
+package-lock.json
