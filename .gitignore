@@ -1,0 +1,13 @@
+*.iml
+.DS_Store
+.idea
+.code
+node_modules
+build
+dist
+target
+secret
+secrets
+scratch
+creds
+.env
