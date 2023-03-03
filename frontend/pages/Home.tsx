@@ -1,6 +1,7 @@
 import { Button, Card, Col, Container, Row } from 'react-bootstrap'
 import NavBar from '../components/navbar'
 import Footer from '../components/footer'
+import SearchFeatureContainer from "../components/SearchFeatureContainer";
 
 
 export default function Home() {
@@ -8,7 +9,15 @@ export default function Home() {
     return (
         <Container fluid className='px-0 min-vw-100 min'>
             <NavBar />
-            <div className="search-gif">
+
+            <div className="search-gif"
+                style={{
+                    display:"flex",
+                    justifyContent:"center",
+                    paddingTop: "200px",
+                  }}
+            >
+                <SearchFeatureContainer />
 
             </div>
             <Container fluid="lg">
