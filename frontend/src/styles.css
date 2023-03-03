@@ -19,7 +19,7 @@
 
 
 body {
-    background-color: #121212;
+    background-color: white;
 }
 
 a.nav-link {
@@ -42,6 +42,30 @@ a.navbar-brand {
     background-blend-mode: multiply;
 }
 
+
+.transition-bg{
+    transition: all 0.4s ease-in-out;
+}
+
+.footer-link{
+    font-size: var(--fs-body);
+    font-family: var(--header-font);
+    color: white;
+}
+
+.footer-link:hover, .footer-link:focus, .footer-link:active{
+    color: #a3a3a3;
+}
+
+.bottom-footer-txt{
+    font-size: var(--fs-body);
+    font-family: var(--header-font);
+    color: white;
+}
+
+.bottom-footer-txt:hover, .bottom-footer-txt:focus, .bottom-footer-txt:active{
+    color: #a3a3a3;
+}
 
 
 /*media queries for changing screen sizes*/

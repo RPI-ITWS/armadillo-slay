@@ -2,9 +2,20 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import { Container } from 'react-bootstrap';
 import {Link} from 'react-router-dom';
+import { useState } from 'react';
 
 export default function NavBar() {
 
+    const [scrolled, setScrolled] = useState(false);
+
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 0) {
+            setScrolled(true);
+        } else {
+            setScrolled(false);
+        }
+    });
+        
     type isActive = (path: string) => boolean;
 
     let isActive: isActive = (path) => {
@@ -12,7 +23,7 @@ export default function NavBar() {
     }
 
     return (
-        <Navbar expand="lg" fixed='top' variant='dark' className='py-3'>
+        <Navbar expand="lg" fixed='top' variant='dark' className={`py-3 ${scrolled ? 'bg-black' : 'bg-transparent'} transition-bg`}>
             <Container fluid="lg">
             <Navbar.Brand className=' align-items-center' as={Link} to="/home">NASA Renewable Energy Data</Navbar.Brand>
             <Navbar.Toggle aria-controls="navbar-nav" />
