@@ -5,8 +5,8 @@ export default function SearchFeatureContainer(){
   const [loc,setLoc] = useState("");
   
     return(
-        <div>
-            <div className="d-flex justify-content-between">
+        <div className="pb-4">
+            <div className="d-flex align-items-center">
             <input 
               id="search-location-input"
               type="text"
@@ -15,12 +15,6 @@ export default function SearchFeatureContainer(){
                 setLoc(e.target.value);
               }}
             />
-            <select id="select-location-input">
-              <option value="raw-data" selected>Raw Data</option>
-              <option value="visualizations">Visualizations</option>
-            </select>
-            </div>
-            <div className="d-flex justify-content-end">
             <button id="search-location-btn">Search</button>
             </div>
         </div>
