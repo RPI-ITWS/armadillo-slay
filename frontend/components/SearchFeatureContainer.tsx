@@ -2,29 +2,27 @@ import React, {useEffect, useState} from "react";
 
 export default function SearchFeatureContainer(){
 
-  const [loc,setLoc] = useState("")
-
-
-
-
+  const [loc,setLoc] = useState("");
+  
     return(
         <div>
-            <input
-              style={{
-                width: "500px",
-                height: "50px",
-                fontSize: "20px",
-                padding: "10px",
-                borderRadius: "5px",
-                backgroundColor: "#f2f2f2",
-                color: "#333",
-            }}
+            <div className="d-flex justify-content-between">
+            <input 
+              id="search-location-input"
               type="text"
-              placeholder="Search for a feature"
+              placeholder="Enter a location"
               onChange={(e) => {
                 setLoc(e.target.value);
               }}
             />
+            <select id="select-location-input">
+              <option value="raw-data" selected>Raw Data</option>
+              <option value="visualizations">Visualizations</option>
+            </select>
+            </div>
+            <div className="d-flex justify-content-end">
+            <button id="search-location-btn">Search</button>
+            </div>
         </div>
     )
 }

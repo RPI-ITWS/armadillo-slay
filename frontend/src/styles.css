@@ -34,12 +34,16 @@ a.navbar-brand {
 
 .search-gif{
     width: 100%;
-    height: 100vh;
+    min-height: 100vh;
     background-image: url('./assets/clouds3_1024.gif');
     background-repeat: no-repeat;
     background-size: cover;
     background-color: rgba(0, 0, 0, 0.5);
     background-blend-mode: multiply;
+}
+
+.landing-txt{
+    color: white;
 }
 
 
@@ -67,6 +71,95 @@ a.navbar-brand {
     color: #a3a3a3;
 }
 
+.search-gif{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+#search-location-input{
+    width: 85%;
+    height: 3rem;
+    border-radius: 0.5rem;
+    border: none;
+    font-size: var(--fs-body);
+    font-family: var(--body-font);
+    background-color:rgba(255, 255, 255, 0.5);
+    color: black;
+    background-image: url('./assets/search-icon.svg');
+    background-repeat: no-repeat;
+    padding-left: 2rem;
+    background-position: 0.5rem;
+}
+
+input#search-location-input::placeholder{
+    color: black;
+    opacity: 1;
+}
+
+#search-location-input:focus, #search-location-input:active, #search-location-input:hover{
+    outline: none;
+    box-shadow: 0 0 0 0.2rem rgba(0, 0, 0, 0.25);
+}
+
+#select-location-input{
+    width: 15%;
+    height: 3rem;
+    border-radius: 0.5rem;
+    margin-left: 0.5rem;
+    border: none;
+    font-size: var(--fs-body);
+    font-family: var(--body-font);
+    background-color:rgba(255, 255, 255, 0.5);
+    color: black;
+}
+
+
+#select-location-input:focus, #select-location-input:active, #select-location-input:hover{
+    outline: none;
+    box-shadow: 0 0 0 0.2rem rgba(0, 0, 0, 0.25);
+}
+
+#select-location-input option{
+    font-size: var(--fs-body);
+    font-family: var(--body-font);
+}
+
+#search-location-btn{
+    margin-top: 0.5rem;
+    width: 15%;
+    height: 3rem;
+    border-radius: 0.5rem;
+    border: none;
+    font-size: var(--fs-body);
+    font-family: var(--body-font);
+    background-color: black;
+    color: white;
+}
+
+#search-location-btn:focus, #search-location-btn:active, #search-location-btn:hover{
+    outline: none;
+    box-shadow: 0 0 0 0.2rem rgba(0, 0, 0, 0.25);
+    border-color: none;
+    background-color: #a3a3a3;
+    color: black;
+}
+
+.landing-btn{
+    background-color: black;
+    color: white;
+    border: none;
+    border-radius: 0.5rem;
+    font-size: var(--fs-body);
+    font-family: var(--body-font);
+    padding: 0.75rem;
+}
+
+.landing-btn:hover, .landing-btn:focus, .landing-btn:active{
+    background-color: #a3a3a3;
+    color: black;
+}
 
 /*media queries for changing screen sizes*/
 @media only screen and (min-width: 280px) {
@@ -88,9 +181,21 @@ a.navbar-brand {
     }
 }
 
+@media only screen and (max-width: 992px) {
+    .landing-info{
+        padding-top: 1rem;
+    }
+    #search-location-btn{
+        width: 100%;
+    }
+}
+
 @media only screen and (min-width: 992px) {
     :root {
         font-size: 95%;
+    }
+    .landing-info{
+        text-align: center;
     }
 }
 

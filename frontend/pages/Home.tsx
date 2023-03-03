@@ -2,6 +2,7 @@ import { Button, Card, Col, Container, Row } from 'react-bootstrap'
 import NavBar from '../components/navbar'
 import Footer from '../components/footer'
 import SearchFeatureContainer from "../components/SearchFeatureContainer";
+import { Link } from 'react-router-dom';
 
 
 export default function Home() {
@@ -10,15 +11,28 @@ export default function Home() {
         <Container fluid className='px-0 min-vw-100 min'>
             <NavBar />
 
-            <div className="search-gif"
-                style={{
-                    display:"flex",
-                    justifyContent:"center",
-                    paddingTop: "200px",
-                  }}
-            >
+            <div className="search-gif">
+                <Container fluid="lg" className='landing-container'>
+                <h2 className="display-4 landing-txt"> Search for Data </h2>
                 <SearchFeatureContainer />
-
+                <Row className='pt-5'>
+                    <Col xl={4} lg={12} className="landing-info">
+                        <h3 className="display-4 landing-txt">Data</h3>
+                        <p className="lead landing-txt">Download data from NASA's POWER project.</p>
+                        <Link to="/data"> <Button className='landing-btn'>Go to Data</Button> </Link>
+                    </Col>
+                    <Col xl={4} lg={12} className="landing-info">
+                        <h3 className="display-4 landing-txt">Visualizations</h3>
+                        <p className="lead landing-txt"> View visualization of the data from NASA's POWER project.</p>
+                        <Link to="/visualizations"> <Button className='landing-btn'>Go to Visualizations</Button> </Link> 
+                    </Col>
+                    <Col xl={4} lg={12} className="landing-info">
+                        <h3 className="display-4 landing-txt landing-txt">API</h3>
+                        <p className="lead landing-txt">View the API documentation for NASA weather data.</p>
+                        <Link to="/documents"> <Button className='landing-btn' >Go to API</Button> </Link>
+                    </Col>
+                </Row>
+                </Container>
             </div>
             <Container fluid="lg">
                 <Row className="justify-content-center">
