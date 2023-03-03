@@ -82,7 +82,7 @@ a.navbar-brand {
     flex-direction: column;
 }
 
-#search-location-input {
+#search-location-input  {
     width: 85%;
     height: 3rem;
     border-radius: 0.5rem;
@@ -96,6 +96,35 @@ a.navbar-brand {
     padding-left: 2rem;
     background-position: 0.5rem;
 }
+.css-yk16xz-control{
+    background-color: rgba(255, 255, 255, 0);
+    height: 3rem;
+    border-radius: 0.5rem;
+    border: none;
+    font-size: var(--fs-body);
+    font-family: var(--body-font);
+    color: black;
+}
+
+div.css-1pahdxg-control, .css-1pahdxg-control:hover, .css-1pahdxg-control:focus, .css-1pahdxg-control:active{
+    background-color: rgba(255, 255, 255, 0);
+    height: 3rem;
+    border-radius: 0.5rem;
+    border: none;
+    font-size: var(--fs-body);
+    font-family: var(--body-font);
+    color: black !important;
+    box-shadow: none !important;
+}
+
+div.css-26l3qy-menu{
+    background-color: rgba(255, 255, 255, 0.75);
+    font-size: var(--fs-body);
+    font-family: var(--body-font);
+    color: black !important;
+    box-shadow: none !important;
+}
+
 
 input#search-location-input::placeholder {
     color: black;

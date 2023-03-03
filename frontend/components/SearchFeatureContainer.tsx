@@ -1,5 +1,7 @@
 import React, {useEffect, useState} from "react";
 
+import GooglePlacesAutocomplete from "react-google-places-autocomplete";
+
 export default function SearchFeatureContainer(){
 
   const [loc,setLoc] = useState("");
@@ -7,13 +9,12 @@ export default function SearchFeatureContainer(){
     return(
         <div className="pb-4">
             <div className="d-flex align-items-center">
-            <input 
-              id="search-location-input"
-              type="text"
-              placeholder="Enter a location"
-              onChange={(e) => {
-                setLoc(e.target.value);
-              }}
+            <GooglePlacesAutocomplete
+                apiKey="AIzaSyBUWvdxMUThsLju0AFwfK2koXTgJKPY9HU"
+                selectProps={{
+                    placeholder: "Search Location",
+                    id: "search-location-input"
+                }}
             />
             <button id="search-location-btn">Search</button>
             </div>
