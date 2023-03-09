@@ -1,0 +1,43 @@
+/*media queries for changing screen sizes*/
+@media only screen and (min-width: 280px) {
+    :root {
+        font-size: 70%;
+    }
+}
+
+@media only screen and (min-width: 576px) {
+    :root {
+        font-size: 85%;
+    }
+}
+
+
+@media only screen and (min-width: 768px) {
+    :root {
+        font-size: 90%;
+    }
+}
+
+@media only screen and (max-width: 992px) {
+    .landing-info {
+        padding-top: 1rem;
+    }
+}
+
+@media only screen and (min-width: 992px) {
+    :root {
+        font-size: 95%;
+    }
+}
+
+@media only screen and (min-width: 1200px) {
+    :root {
+        font-size: 100%;
+    }
+}
+
+@media only screen and (min-width: 1400px) {
+    :root {
+        font-size: 110%;
+    }
+}

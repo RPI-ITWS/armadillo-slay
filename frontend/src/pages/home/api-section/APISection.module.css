@@ -1,0 +1,29 @@
+code {
+    display: block;
+    background-color: black;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 14px;
+    font-family: "Fira Code", monospace;
+    color: #FFFFFF;
+    line-height: 1.5;
+    overflow: scroll;
+}
+
+/* Define styles for the syntax highlighting */
+.keyword {
+    color: #B06AB3;
+}
+
+.string {
+    color: #98C379;
+}
+
+.operator {
+    color: #56B6C2;
+}
+
+.comment {
+    color: #ABB2BF;
+    font-style: italic;
+}
