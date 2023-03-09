@@ -1,0 +1,13 @@
+a.nav-link {
+    font-size: var(--fs-body-lg);
+    font-family: var(--header-font);
+}
+
+a.navbar-brand {
+    font-size: var(--fs-head);
+    font-family: var(--header-font);
+}
+
+.transition-bg {
+    transition: all 0.4s ease-in-out;
+}
