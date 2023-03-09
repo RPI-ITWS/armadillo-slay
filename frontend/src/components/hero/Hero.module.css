@@ -1,7 +1,6 @@
 .search-gif {
     width: 100%;
     min-height: 100vh;
-    background-image: url('/clouds.gif');
     background-repeat: no-repeat;
     background-size: cover;
     background-color: rgba(0, 0, 0, 0.5);
@@ -14,4 +13,22 @@
     align-items: center;
     flex-direction: column;
     background-color: rgba(0, 0, 0, 0.5);
+    background-image: url('/clouds.gif');
 }
+
+.landing-container h2 {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #fff;
+}
+
+.landing-title {
+    font-weight: bold;
+}
+
+
+
+
+
+
+
