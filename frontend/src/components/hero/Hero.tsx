@@ -4,7 +4,7 @@ import {HeroInfoItem} from "@/components/hero/HeroInfoItem";
 import styles from "./Hero.module.css";
 import {Whitespace} from "@/components";
 
-function HeroSection() {
+function Hero() {
     console.log(styles)
 
     const heroItems = [
@@ -54,5 +54,5 @@ function HeroSection() {
 }
 
 export {
-    HeroSection
+    Hero
 }

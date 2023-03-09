@@ -1,6 +1,6 @@
 import {Container} from 'react-bootstrap'
 import {APISection} from "@/pages/home/api-section";
-import {HeroSection} from "@/components/hero";
+import {Hero} from "@/components/hero";
 import {Section} from "@/components/section";
 import React from "react";
 import {Whitespace} from "@/components";
@@ -70,7 +70,7 @@ function Home() {
 
     return (
         <Container fluid className='px-0 min-vw-100 min'>
-            <HeroSection/>
+            <Hero/>
             <Container fluid="lg">
                 {sections.map(
                     (section, index) =>
