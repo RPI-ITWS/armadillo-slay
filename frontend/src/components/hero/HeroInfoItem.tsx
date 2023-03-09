@@ -1,16 +1,27 @@
 import {Button, Col} from "react-bootstrap";
 import {Link} from "react-router-dom";
+import styles from "./Hero.module.css";
 
-function HeroInfoItem({
-                          title,
-                          description,
-                          link,
-                          linkText
-                      }: { title: string, description: string, link: string, linkText: string }) {
-    return <Col xl={4} lg={12} className="landing-info">
-        <h3 className="display-4 landing-txt">{title}</h3>
-        <p className="lead landing-txt">{description}</p>
-        <Link to={link}> <Button className="landing-btn">{linkText}</Button> </Link>
+
+interface HeroInfoItemProps {
+    title: string,
+    description: string,
+    link: string,
+    linkText: string
+
+}
+
+function HeroInfoItem(
+    {
+        title,
+        description,
+        link,
+        linkText
+    }: HeroInfoItemProps) {
+    return <Col xl={4} lg={12} className={styles["hero-info-item"]}>
+        <h3 className={styles.heroItemTitle}>{title}</h3>
+        <p className={styles.landingDescription}>{description}</p>
+        <Link to={link}> <Button className={styles.heroItemButton}>{linkText}</Button> </Link>
     </Col>;
 }
 

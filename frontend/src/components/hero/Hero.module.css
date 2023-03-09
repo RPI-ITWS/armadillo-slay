@@ -10,10 +10,18 @@
 .landing-container {
     display: flex;
     justify-content: center;
-    align-items: center;
     flex-direction: column;
     background-color: rgba(0, 0, 0, 0.5);
     background-image: url('/clouds.gif');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-blend-mode: multiply;
+    position: relative;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    padding: 2em;
+
 }
 
 .landing-container h2 {
@@ -21,14 +29,35 @@
     font-weight: bold;
     color: #fff;
 }
-
-.landing-title {
+.hero-headline{
+    font-size: 2rem;
+    font-weight: bold;
+    color: #fff;
+    margin: 2em;
+}
+.hero-item-title {
     font-weight: bold;
 }
 
+.hero-info-item {
+    margin: 2em 0;
+    color: #fff;
+}
 
+.hero-item-button {
 
+}
 
+.landing-description {
 
+}
 
+.hero-item-list{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
 
+.hero-item-list.div {
+    width: 300px;
+}

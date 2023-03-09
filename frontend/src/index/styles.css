@@ -19,7 +19,7 @@
 }
 
 @media only screen and (max-width: 992px) {
-    .landing-info {
+    .hero-item-info {
         padding-top: 1rem;
     }
 }

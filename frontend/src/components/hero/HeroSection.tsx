@@ -5,31 +5,52 @@ import styles from "./Hero.module.css";
 import {Whitespace} from "@/components";
 
 function HeroSection() {
+    console.log(styles)
 
-    return <Container fluid="lg" className={styles.landingContainer}>
+    const heroItems = [
+        {
+            title: "Data",
+            description: "Download data from NASA's POWER project",
+            link: "/data",
+            linkText: "Go to Data"
+        },
+        {
+            title: "Visualizations",
+            description: "View visualization of the data from NASA's POWER project",
+            link: "/visualizations",
+            linkText: "Go to Visualizations"
+        },
+        {
+            title: "API",
+            description: "View the API documentation for NASA weather data.",
+            link: "/documents",
+            linkText: "Go to API"
+        }
+    ]
 
-        <h2 className={styles.landingTitle} > Search for Data </h2>
+
+    return <div className={styles["landing-container"]}>
+
+        <h2 className={styles["hero-headline"]}> Search for Data </h2>
 
         <Whitespace height={"2em"} width={"2em"}/>
 
         <Searchbar/>
 
-        <Row className="pt-5">
-            <HeroInfoItem title={"Data"}
-                          description={"Download data from NASA's POWER project"} link={"/data"}
-                          linkText={"Go to Data"}
-            />
-            <HeroInfoItem title={"Visualizations"}
-                          description={"View visualization of the data from NASA's POWER project"}
-                          link={"/visualizations"}
-                          linkText={"Go to Visualizations"}
-            />
-            <HeroInfoItem title={"API"} description={"View the API documentation for NASA weather data."}
-                          link={"/documents"}
-                          linkText={"Go to API"}
-            />
+        <Row className={styles["hero-item-list"]}>
+
+            {heroItems.map((item, index) => {
+                return <HeroInfoItem
+                    key={index}
+                    title={item.title}
+                    description={item.description}
+                    link={item.link}
+                    linkText={item.linkText}
+                />
+            })}
+
         </Row>
-    </Container>
+    </div>
 }
 
 export {

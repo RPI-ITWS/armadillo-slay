@@ -1,20 +1,34 @@
 import {Button, Col, Row} from "react-bootstrap";
 import {ReactElement} from "react";
+import styles from "./Section.module.css";
 
-function Section({
-                     title,
-                     description,
-                     image,
-                     callToAction,
-                     callback,
-                     content,
-                     flip = false
-                 }: { flip: boolean, content?: ReactElement, title: string, description: string, image: string | undefined, callToAction?: string, callback?: () => void, }) {
+interface SectionProps {
+    title: string,
+    description: string,
+    image: string | undefined,
+    callToAction?: string,
+    callback?: () => void,
+    content?: ReactElement,
+    flip?: boolean
+
+}
+
+function Section(
+    {
+        title,
+        description,
+        image,
+        callToAction,
+        callback,
+        content,
+        flip = false
+    }: SectionProps) {
     let left =
         <Col xl={6} lg={12} className="py-2">
             <h3 className="display-4">{title}</h3>
             <p className="lead body-txt-left">{description}</p>
-            {callToAction && callback && <Button className="landing-btn" onClick={callback}>{callToAction}</Button>}
+            {callToAction && callback &&
+                <Button className={styles.callToActionButton} onClick={callback}>{callToAction}</Button>}
         </Col>
 
     let right =

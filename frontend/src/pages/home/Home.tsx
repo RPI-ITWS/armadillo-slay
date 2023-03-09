@@ -3,6 +3,7 @@ import {APISection} from "@/pages/home/api-section";
 import {HeroSection} from "@/components/hero";
 import {Section} from "@/components/section";
 import React from "react";
+import {Whitespace} from "@/components";
 
 interface ISection {
     title: string,

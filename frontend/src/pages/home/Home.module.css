@@ -58,7 +58,7 @@ div.css-26l3qy-menu {
 }
 
 
-.landing-btn {
+.hero-item-button {
     background-color: black;
     color: white;
     border: none;
@@ -68,14 +68,14 @@ div.css-26l3qy-menu {
     padding: 0.75rem;
 }
 
-.landing-btn:hover,
-.landing-btn:focus,
-.landing-btn:active {
+.hero-item-button:hover,
+.hero-item-button:focus,
+.hero-item-button:active {
     background-color: #a3a3a3;
     color: black;
 }
 
-.landing-info {
+.hero-item-info {
     text-align: center;
 }
 

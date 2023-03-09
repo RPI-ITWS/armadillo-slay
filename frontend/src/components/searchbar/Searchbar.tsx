@@ -1,12 +1,13 @@
 import React, {useState} from "react";
 import {Whitespace} from "@/components";
+import styles from "./Searchbar.module.css";
 
 function Searchbar() {
 
     const [loc, setLoc] = useState("");
 
     return (
-        <div style={{display: "flex", justifyContent: "space-around"}}>
+        <div style={{display: "flex", justifyContent: "space-around"} }>
             <input
                 id="search-location-input"
                 placeholder="Search Location"
@@ -16,8 +17,9 @@ function Searchbar() {
                         border: "none",
                         borderBottom: "1px solid black",
                         outline: "none",
-                        fontSize: "1.5em"
-
+                        fontSize: "1.5em",
+                        borderRadius:"5px",
+                        paddingLeft: "1em"
                     }
                 }
 
