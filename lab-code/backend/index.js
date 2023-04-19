@@ -1,16 +1,12 @@
+require('dotenv').config();
 const counties = require('./fips-long-lat.json');
 const states = require('./fips-states.json');
-require('dotenv').config();
-const { MongoClient, ServerApiVersion } = require('mongodb');
-const uri = process.env.MONGO_URI;
-const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
 const express = require('express');
 const app = express();
 const statesMap = new Map(Object.entries(states));
 const countiesMap = new Map(counties.map(county => [county.fips_code, county]));
 
 async function preloadDocs() {
-    await client.connect();
 
     for (let i = 100; i < 101; i++) {
 
@@ -176,16 +172,12 @@ app.put('/:state/:county', async (req, res) => {
     res.send("Data Updated");
 });
 
+
 app.listen(3000, async () => {
     console.log("Server running on port 3000");
-    await client.connect();
-    console.log("Connected to MongoDB");
 });
 
-
 process.on('SIGINT', () => {
-    console.log("Closing MongoDB connection");
     console.log("Closing server");
-    client.close();
     process.exit();
 });
