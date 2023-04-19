@@ -1,273 +1,269 @@
 /*Root element with variables to use throughout enter website*/
 :root {
-    /*colors*/
-    --Primary: #121212;
-    --Secondary: #ffffff;
-    /*typography*/
-    --fs-caption: 0.75rem;
-    --fs-body: 1rem;
-    --fs-body-lg: 1.25rem;
-    --fs-head: 1.5rem;
-    --fs-head-md: 2rem;
-    --fs-head-lg: 2.5rem;
-    --fs-head-xl: 3rem;
-    --fs-head-xxl: 4rem;
-    /*fonts*/
-    --header-font: 'Inter', sans-serif;
-    --body-font: 'Open Sans', sans-serif;
+  /*colors*/
+  --Primary: #121212;
+  --Secondary: #ffffff;
+  /*typography*/
+  --fs-caption: 0.75rem;
+  --fs-body: 1rem;
+  --fs-body-lg: 1.25rem;
+  --fs-head: 1.5rem;
+  --fs-head-md: 2rem;
+  --fs-head-lg: 2.5rem;
+  --fs-head-xl: 3rem;
+  --fs-head-xxl: 4rem;
+  /*fonts*/
+  --header-font: "Inter", sans-serif;
+  --body-font: "Open Sans", sans-serif;
 }
 
-
 body {
-    background-color: white;
+  background-color: white;
 }
 
 a.nav-link {
-    font-size: var(--fs-body-lg);
-    font-family: var(--header-font);
+  font-size: var(--fs-body-lg);
+  font-family: var(--header-font);
 }
 
 a.navbar-brand {
-    font-size: var(--fs-head);
-    font-family: var(--header-font);
+  font-size: var(--fs-head);
+  font-family: var(--header-font);
 }
 
 .search-gif {
-    width: 100%;
-    min-height: 100vh;
-    background-image: url('./assets/clouds3_1024.gif');
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-color: rgba(0, 0, 0, 0.5);
-    background-blend-mode: multiply;
+  width: 100%;
+  min-height: 100vh;
+  background-image: url("./assets/clouds3_1024.gif");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-color: rgba(0, 0, 0, 0.5);
+  background-blend-mode: multiply;
 }
 
 .landing-txt {
-    color: white;
+  color: white;
 }
 
-
 .transition-bg {
-    transition: all 0.4s ease-in-out;
+  transition: all 0.4s ease-in-out;
 }
 
 .footer-link {
-    font-size: var(--fs-body);
-    font-family: var(--header-font);
-    color: white;
+  font-size: var(--fs-body);
+  font-family: var(--header-font);
+  color: white;
 }
 
 .footer-link:hover,
 .footer-link:focus,
 .footer-link:active {
-    color: #a3a3a3;
+  color: #a3a3a3;
 }
 
 .bottom-footer-txt {
-    font-size: var(--fs-body);
-    font-family: var(--header-font);
-    color: white;
+  font-size: var(--fs-body);
+  font-family: var(--header-font);
+  color: white;
 }
 
 .bottom-footer-txt:hover,
 .bottom-footer-txt:focus,
 .bottom-footer-txt:active {
-    color: #a3a3a3;
+  color: #a3a3a3;
 }
 
 .search-gif {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
 
-#search-location-input  {
-    width: 85%;
-    height: 3rem;
-    border-radius: 0.5rem;
-    border: none;
-    font-size: var(--fs-body);
-    font-family: var(--body-font);
-    background-color: rgba(255, 255, 255, 0.5);
-    color: black;
-    background-image: url('./assets/search-icon.svg');
-    background-repeat: no-repeat;
-    padding-left: 2rem;
-    background-position: 0.5rem;
+#search-location-input {
+  width: 85%;
+  height: 3rem;
+  border-radius: 0.5rem;
+  border: none;
+  font-size: var(--fs-body);
+  font-family: var(--body-font);
+  background-color: rgba(255, 255, 255, 0.5);
+  color: black;
+  background-image: url("./assets/search-icon.svg");
+  background-repeat: no-repeat;
+  padding-left: 2rem;
+  background-position: 0.5rem;
 }
-div.css-yk16xz-control{
-    background-color: rgba(255, 255, 255, 0);
-    height: 3rem;
-    border-radius: 0.5rem;
-    border: none;
-    font-size: var(--fs-body);
-    font-family: var(--body-font);
-    color: black;
-}
-
-div.css-1pahdxg-control, .css-1pahdxg-control:hover, .css-1pahdxg-control:focus, .css-1pahdxg-control:active{
-    background-color: rgba(255, 255, 255, 0);
-    height: 3rem;
-    border-radius: 0.5rem;
-    border: none;
-    font-size: var(--fs-body);
-    font-family: var(--body-font);
-    color: black !important;
-    box-shadow: none !important;
+div.css-yk16xz-control {
+  background-color: rgba(255, 255, 255, 0);
+  height: 3rem;
+  border-radius: 0.5rem;
+  border: none;
+  font-size: var(--fs-body);
+  font-family: var(--body-font);
+  color: black;
 }
 
-div.css-26l3qy-menu{
-    background-color: rgba(255, 255, 255, 0.75);
-    font-size: var(--fs-body);
-    font-family: var(--body-font);
-    color: black !important;
-    box-shadow: none !important;
+div.css-1pahdxg-control,
+.css-1pahdxg-control:hover,
+.css-1pahdxg-control:focus,
+.css-1pahdxg-control:active {
+  background-color: rgba(255, 255, 255, 0);
+  height: 3rem;
+  border-radius: 0.5rem;
+  border: none;
+  font-size: var(--fs-body);
+  font-family: var(--body-font);
+  color: black !important;
+  box-shadow: none !important;
 }
 
+div.css-26l3qy-menu {
+  background-color: rgba(255, 255, 255, 0.75);
+  font-size: var(--fs-body);
+  font-family: var(--body-font);
+  color: black !important;
+  box-shadow: none !important;
+}
 
 input#search-location-input::placeholder {
-    color: black;
-    opacity: 1;
+  color: black;
+  opacity: 1;
 }
 
 #search-location-input:focus,
 #search-location-input:active,
 #search-location-input:hover {
-    outline: none;
-    box-shadow: 0 0 0 0.2rem rgba(0, 0, 0, 0.25);
+  outline: none;
+  box-shadow: 0 0 0 0.2rem rgba(0, 0, 0, 0.25);
 }
 
-
 #search-location-btn {
-    width: 15%;
-    border-radius: 0.5rem;
-    border: none;
-    font-size: var(--fs-body);
-    font-family: var(--body-font);
-    background-color: black;
-    color: white;
-    height: 3rem;
-    margin-left: 0.5rem;
-
+  width: 15%;
+  border-radius: 0.5rem;
+  border: none;
+  font-size: var(--fs-body);
+  font-family: var(--body-font);
+  background-color: black;
+  color: white;
+  height: 3rem;
+  margin-left: 0.5rem;
 }
 
 #search-location-btn:focus,
 #search-location-btn:active,
 #search-location-btn:hover {
-    outline: none;
-    box-shadow: 0 0 0 0.2rem rgba(0, 0, 0, 0.25);
-    border-color: none;
-    background-color: #a3a3a3;
-    color: black;
+  outline: none;
+  box-shadow: 0 0 0 0.2rem rgba(0, 0, 0, 0.25);
+  border-color: none;
+  background-color: #a3a3a3;
+  color: black;
 }
 
 .landing-btn {
-    background-color: black;
-    color: white;
-    border: none;
-    border-radius: 0.5rem;
-    font-size: var(--fs-body);
-    font-family: var(--body-font);
-    padding: 0.75rem;
+  background-color: black;
+  color: white;
+  border: none;
+  border-radius: 0.5rem;
+  font-size: var(--fs-body);
+  font-family: var(--body-font);
+  padding: 0.75rem;
 }
 
 .landing-btn:hover,
 .landing-btn:focus,
 .landing-btn:active {
-    background-color: #a3a3a3;
-    color: black;
+  background-color: #a3a3a3;
+  color: black;
 }
 
 .landing-info {
-    text-align: center;
+  text-align: center;
 }
-
 
 .body-txt-left,
 .body-txt-right {
-    font-size: var(--fs-body);
+  font-size: var(--fs-body);
 }
 
-.landing-code{
-    overflow: scroll;
+.landing-code {
+  overflow: scroll;
 }
 
-.body-code-left{
-    max-width: 100vw;
-    overflow: scroll;
+.body-code-left {
+  max-width: 100vw;
+  overflow: scroll;
 }
 
 code {
-    display: block;
-    background-color: black;
-    padding: 10px;
-    border-radius: 5px;
-    font-size: 14px;
-    font-family: "Fira Code", monospace;
-    color: #FFFFFF;
-    line-height: 1.5;
-    overflow: scroll;
+  display: block;
+  background-color: black;
+  padding: 10px;
+  border-radius: 5px;
+  font-size: 14px;
+  font-family: "Fira Code", monospace;
+  color: #ffffff;
+  line-height: 1.5;
+  overflow: scroll;
 }
 
 /* Define styles for the syntax highlighting */
 .keyword {
-    color: #B06AB3;
+  color: #b06ab3;
 }
 
 .string {
-    color: #98C379;
+  color: #98c379;
 }
 
 .operator {
-    color: #56B6C2;
+  color: #56b6c2;
 }
 
 .comment {
-    color: #ABB2BF;
-    font-style: italic;
+  color: #abb2bf;
+  font-style: italic;
 }
 
 /*media queries for changing screen sizes*/
 @media only screen and (min-width: 280px) {
-    :root {
-        font-size: 70%;
-    }
+  :root {
+    font-size: 70%;
+  }
 }
 
 @media only screen and (min-width: 576px) {
-    :root {
-        font-size: 85%;
-    }
+  :root {
+    font-size: 85%;
+  }
 }
 
-
 @media only screen and (min-width: 768px) {
-    :root {
-        font-size: 90%;
-    }
+  :root {
+    font-size: 90%;
+  }
 }
 
 @media only screen and (max-width: 992px) {
-    .landing-info {
-        padding-top: 1rem;
-    }
+  .landing-info {
+    padding-top: 1rem;
+  }
 }
 
 @media only screen and (min-width: 992px) {
-    :root {
-        font-size: 95%;
-    }
+  :root {
+    font-size: 95%;
+  }
 }
 
 @media only screen and (min-width: 1200px) {
-    :root {
-        font-size: 100%;
-    }
+  :root {
+    font-size: 100%;
+  }
 }
 
 @media only screen and (min-width: 1400px) {
-    :root {
-        font-size: 110%;
-    }
+  :root {
+    font-size: 110%;
+  }
 }

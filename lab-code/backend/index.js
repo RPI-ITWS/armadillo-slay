@@ -1,3 +1,4 @@
+const listEndpoints = require('express-list-endpoints');
 require('dotenv').config();
 const counties = require('./fips-long-lat.json');
 const states = require('./fips-states.json');
@@ -236,10 +237,12 @@ app.put('/:state/:county', async (req, res) => {
 
 
 app.listen(3000, async () => {
-    console.log("Server running on port 3000");
+  console.log("Server running on port 3000");
+  console.log("Endpoints:");
+  console.log(listEndpoints(app));
 });
 
-process.on('SIGINT', () => {
-    console.log("Closing server");
-    process.exit();
+process.on("SIGINT", () => {
+  console.log("Closing server");
+  process.exit();
 });

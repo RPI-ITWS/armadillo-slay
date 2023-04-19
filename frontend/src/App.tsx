@@ -1,62 +1,59 @@
-import { useEffect, useState } from 'react'
-import reactLogo from './assets/react.svg'
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
-import Home from "../pages/Home"
-import Data from "../pages/Data"
-import Visualizations from "../pages/Visualizations"
-import APIDocs from "../pages/APIDocs"
+import { useEffect, useState } from "react";
+import reactLogo from "./assets/react.svg";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Home from "../pages/Home";
+import Data from "../pages/Data";
+import Visualizations from "../pages/Visualizations";
+import APIDocs from "../pages/APIDocs";
 
 if (location.pathname != "/") {
-  Promise.all([
-    import('./styles.css'),
-  ])
+  Promise.all([import("./styles.css")]);
 } else {
-  Promise.all([
-    import('./App.css')
-  ])
+  Promise.all([import("./App.css")]);
 }
 
 function App() {
-  const [count, setCount] = useState(0)
-  const [online, isOnline] = useState(false)
+  const [count, setCount] = useState(0);
+  const [online, isOnline] = useState(false);
 
   if (location.pathname === "/") {
     isOnline(true);
     useEffect(() => {
-
       const healthCheck = async () => {
-
         try {
-          const res = await fetch('/api/v1/health')
-          const data = await res.json()
-          console.log(data)
+          const res = await fetch("/api/v1/health");
+          const data = await res.json();
+          console.log(data);
           if (data["status"] === "ok") {
-            isOnline(true)
+            isOnline(true);
           }
         } catch (e) {
-          console.error(e)
-          isOnline(false)
+          console.error(e);
+          isOnline(false);
         }
-      }
+      };
 
       const interval = setInterval(() => {
-        healthCheck()
-      }
-        , 1000)
-      return () => clearInterval(interval)
-    }, [])
-
+        healthCheck();
+      }, 1000);
+      return () => clearInterval(interval);
+    }, []);
   }
 
   function Index() {
     return (
       <div className="App">
-        {online ? <div className="online status_indicator" /> : <div className="offline status_indicator" />}
+        {online ? (
+          <div className="online status_indicator" />
+        ) : (
+          <div className="offline status_indicator" />
+        )}
 
         <div className="card">
           <h2>Getting Started</h2>
           <p>
-            Observe the status indicator above. It should be green if the server is running.
+            Observe the status indicator above. It should be green if the server
+            is running.
           </p>
         </div>
         <div>
@@ -80,7 +77,7 @@ function App() {
           Click on the Vite and React logos to learn more
         </p>
       </div>
-    )
+    );
   }
   return (
     <Routes>
@@ -90,7 +87,7 @@ function App() {
       <Route path="/visualizations" element={<Visualizations />} />
       <Route path="/documents" element={<APIDocs />} />
     </Routes>
-  )
+  );
 }
 
-export default App
+export default App;
