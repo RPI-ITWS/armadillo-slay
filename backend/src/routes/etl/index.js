@@ -1,19 +1,21 @@
-const listEndpoints = require('express-list-endpoints');
-require('dotenv').config();
-const counties = require('./fips-long-lat.json');
-const states = require('./fips-states.json');
-const express = require('express');
-const app = express();
+import counties from './counties.json';
+import states from './states.json';
+import connection from '../../db/mongo';
+import { Router } from "express";
+import {validate} from "../../util";
 const statesMap = new Map(Object.entries(states));
 const countiesMap = new Map(counties.map(county => [county.fips_code, county]));
+
+
+const router = Router();
 
 async function preloadDocs() {
 
     for (let i = 0; i < 101; i++) {
 
-        let lat = parseFloat(counties[i].lat);
+        let lat = counties[i]['lat'];
 
-        let lng = parseFloat(counties[i].lng);
+        let lng = counties[i]['lng'];
 
         let fips_code = counties[i].fips_code;
 
@@ -40,9 +42,6 @@ async function preloadDocs() {
         
     }
 }
-
-preloadDocs();
-
 async function addData(county, state) {
     let stateFips;
     for (const [fips, stateAbbr] of statesMap) {
@@ -84,7 +83,6 @@ async function addData(county, state) {
         
     }
 }
-
 function parseFIPS(fips_code) {
     fips_code = fips_code.toString();
     let state;
@@ -93,7 +91,6 @@ function parseFIPS(fips_code) {
     county = fips_code.substring(2, 5);
     return [state, county];
 }
-
 async function normalizeData(county, state, POWERAPI1, POWERAPI2, POWERAPI3, censusAPI, eiaAPI) {
     let collection = {
         county: county,
@@ -111,7 +108,7 @@ async function normalizeData(county, state, POWERAPI1, POWERAPI2, POWERAPI3, cen
     const [powerJson1, powerJson2, powerJson3, censusJson, electricJson] = await Promise.all([powerData1.json(), powerData2.json(), powerData3.json(), censusData.json(), electricData.json()]);
 
 
-    let powerParams1 = Object.keys(powerJson1.properties.parameter);;
+    let powerParams1 = Object.keys(powerJson1.properties.parameter);
     let powerParams2 = Object.keys(powerJson2.properties.parameter);
     let powerParams3 = Object.keys(powerJson3.properties.parameter);
 
@@ -205,44 +202,43 @@ async function normalizeData(county, state, POWERAPI1, POWERAPI2, POWERAPI3, cen
     return collection;
 }
 
-app.get('/:state/:county', async (req, res) => {
+router.get('/:state/:county', async (req, res) => {
     let state = req.params["state"];
     let county = req.params["county"];
+
+
+    const query = validate(county, state) ? {county, state} : () => {
+        return res.json({error: "Invalid query"})
+    };
+
+    const client = await connection();
     const db = client.db("Lab6");
     const collection = db.collection("NASA Data");
-    const query = { county: county, state: state };
     const data = await collection.find(query).toArray();
-    if (data.length == 0) {
-        json = {
-            error: "No data found"
-        };
-        res.json(json);
+
+
+    if (data.length === 0) {
+       res.status(404).json({
+           error: "No documents found"
+       })
     }
-    else {
-        res.json(data);
-    }
+    res.json(data);
 });
 
-app.post('/:state/:county', async (req, res) => {
+router.post('/:state/:county', async (req, res) => {
     res.send("Data Updated");
 });
 
-app.delete('/:state/:county', async (req, res) => {
+router.delete('/:state/:county', async (req, res) => {
     res.send("Data Updated");
 });
 
-app.put('/:state/:county', async (req, res) => {
+router.put('/:state/:county', async (req, res) => {
     res.send("Data Updated");
 });
 
+router.get("/preload", async (req, res) => {
 
-app.listen(3000, async () => {
-  console.log("Server running on port 3000");
-  console.log("Endpoints:");
-  console.log(listEndpoints(app));
-});
-
-process.on("SIGINT", () => {
-  console.log("Closing server");
-  process.exit();
-});
+export {
+    router as etl
+}
