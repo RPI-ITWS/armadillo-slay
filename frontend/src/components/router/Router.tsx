@@ -1,8 +1,8 @@
 import {Route, Routes} from "react-router-dom";
-import {Home} from "@/pages/home";
-import {Data} from "@/pages/data";
-import {Visualization} from "@/pages/visualization";
-import {Docs} from "@/pages/docs";
+import {Home} from "../../pages/home";
+import {Data} from "../../pages/data";
+import {Visualization} from "../../pages/visualization";
+import {Docs} from "../../pages/docs";
 
 function Router() {
     return (

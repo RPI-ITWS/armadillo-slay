@@ -1,7 +1,7 @@
 import {Container} from 'react-bootstrap'
-import {APISection} from "@/pages/home/api-section";
-import {Hero} from "@/components/hero";
-import {Section} from "@/components/section";
+import {APISection} from "./api-section/";
+import {Hero} from "../../components/hero";
+import {Section} from "../../components/section";
 import React from "react";
 import {Whitespace} from "@/components";
 

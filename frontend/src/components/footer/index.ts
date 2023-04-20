@@ -1,3 +1,3 @@
-import Footer from "@/components/footer/Footer";
+import Footer from "./Footer";
 
 export {Footer};

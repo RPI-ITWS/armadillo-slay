@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {Whitespace} from "@/components";
+import {Whitespace} from "../whitespace/Whitespace";
 import styles from "./Searchbar.module.css";
 
 function Searchbar() {

@@ -1,8 +1,8 @@
-import {Container, Row} from "react-bootstrap";
-import {Searchbar} from "@/components/searchbar";
-import {HeroInfoItem} from "@/components/hero/HeroInfoItem";
+import {Row} from "react-bootstrap";
+import {Searchbar} from "../searchbar";
+import {HeroInfoItem} from "./HeroInfoItem";
 import styles from "./Hero.module.css";
-import {Whitespace} from "@/components";
+import {Whitespace} from "../whitespace";
 
 function Hero() {
     console.log(styles)
