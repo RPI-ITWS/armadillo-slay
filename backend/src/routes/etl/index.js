@@ -1,8 +1,7 @@
-import counties from './counties.json' assert { type: "json" };
-import states from './states.json' assert { type: "json" };
+import counties from './counties.json' assert {type: 'json'};
+import states from './states.json' assert {type: 'json'};
 import {newMongoConnection} from '../../db/index.js';
 import {Router} from "express";
-import {validate} from "../../util/index.js";
 import {config} from "../../config/index.js";
 
 const statesMap = new Map(Object.entries(states));
@@ -38,7 +37,7 @@ export async function preloadDocs() {
 
         let eiaAPI = "https://api.eia.gov/v2/electricity/state-electricity-profiles/summary/data/?frequency=annual&data[0]=average-retail-price&data[1]=capacity-ipp&data[2]=carbon-dioxide-lbs&data[3]=direct-use&data[4]=generation-elect-utils&facets[stateID][]=" + stateAbbr + "&sort[0][column]=period&sort[0][direction]=desc&offset=0&length=5000&api_key=" + process.env.EIA_API_KEY;
 
-        let newCollection = await normalizeData(name_1, stateAbbr, POWERAPI1, POWERAPI2, POWERAPI3, censusAPI, eiaAPI);
+        let newCollection = await normalizeData(stateAbbr, name_1, lat, lng, POWERAPI1, POWERAPI2, POWERAPI3, censusAPI, eiaAPI);
 
         documentList.push(newCollection);
     }
@@ -46,7 +45,7 @@ export async function preloadDocs() {
     return documentList;
 }
 
-export async function addData(county, state) {
+export async function getNASAData(state, county) {
     let stateFips;
     for (const [fips, stateAbbr] of statesMap) {
         if (stateAbbr === state) {
@@ -81,7 +80,13 @@ export async function addData(county, state) {
     let censusAPI = "https://api.census.gov/data/2019/acs/acs5?get=NAME,B19013_001E&for=county:" + countyFips + "&in=state:" + stateFips + "&key=" + config.ETL_CENSUS_API_KEY;
     let eiaAPI = "https://api.eia.gov/v2/electricity/state-electricity-profiles/summary/data/?frequency=annual&data[0]=average-retail-price&data[1]=capacity-ipp&data[2]=carbon-dioxide-lbs&data[3]=direct-use&data[4]=generation-elect-utils&facets[stateID][]=" + state + "&sort[0][column]=period&sort[0][direction]=desc&offset=0&length=5000&api_key=" + process.env.EIA_API_KEY;
 
-    let newCollection = await normalizeData(county, state, POWERAPI1, POWERAPI2, POWERAPI3, censusAPI, eiaAPI);
+    let newCollection;
+    try {
+        newCollection = await normalizeData(county, state, POWERAPI1, POWERAPI2, POWERAPI3, censusAPI, eiaAPI);
+    } catch (e) {
+        console.log(e);
+        return
+    }
     return newCollection;
 }
 
@@ -94,11 +99,13 @@ export function parseFIPS(fips_code) {
     return [state, county];
 }
 
-export async function normalizeData(county, state, POWERAPI1, POWERAPI2, POWERAPI3, censusAPI, eiaAPI) {
+export async function normalizeData(state, county, lat, lng, POWERAPI1, POWERAPI2, POWERAPI3, censusAPI, eiaAPI) {
 
     let collection = {
         county: county,
         state: state,
+        lat: lat,
+        long: lng,
         NASA_power_data: {},
         household_income: 0,
         EIA_data: [],
@@ -107,10 +114,24 @@ export async function normalizeData(county, state, POWERAPI1, POWERAPI2, POWERAP
         hydro_rank: 0
     };
 
-    const [powerData1, powerData2, powerData3, censusData, electricData] = await Promise.all([fetch(POWERAPI1), fetch(POWERAPI2), fetch(POWERAPI3), fetch(censusAPI), fetch(eiaAPI)]);
 
-    const [powerJson1, powerJson2, powerJson3, censusJson, electricJson] = await Promise.all([powerData1.json(), powerData2.json(), powerData3.json(), censusData.json(), electricData.json()]);
+    let powerData1, powerData2, powerData3, censusData, electricData;
+    try {
+        // eslint-disable-next-line no-undef
+        [powerData1, powerData2, powerData3, censusData, electricData] = await Promise.all([fetch(POWERAPI1), fetch(POWERAPI2), fetch(POWERAPI3), fetch(censusAPI), fetch(eiaAPI)]);
+    } catch (e) {
+        console.log(e);
+        return;
+    }
 
+    let powerJson1, powerJson2, powerJson3, censusJson, electricJson;
+    try {
+        [powerJson1, powerJson2, powerJson3, censusJson, electricJson] = await Promise.all([powerData1.json(), powerData2.json(), powerData3.json(), censusData.json(), electricData.json()]);
+    } catch (e) {
+
+        console.log(e);
+        return;
+    }
 
     let powerParams1 = Object.keys(powerJson1.properties.parameter);
     let powerParams2 = Object.keys(powerJson2.properties.parameter);
@@ -128,7 +149,7 @@ export async function normalizeData(county, state, POWERAPI1, POWERAPI2, POWERAP
         collection.NASA_power_data[param].longname = powerJsonParams[param].longname;
     });
 
-    let solar_rank = (powerJson["ALLSKY_KT"] && powerJson["ALLSKY_KT"]["ANN"] > 0.5 ? 1 : 0) +
+    let solar_rank = 2 + (powerJson["ALLSKY_KT"] && powerJson["ALLSKY_KT"]["ANN"] > 0.5 ? 1 : 0) +
         (powerJson["CLOUD_AMT"] && powerJson["CLOUD_AMT"]["ANN"] > 60 ? 1 : 0) +
         (powerJson["TOA_SW_DWN"] && powerJson["TOA_SW_DWN"]["ANN"] > 3.5 ? 1 : 0) +
         (powerJson["MIDDAY_INSOL"] && powerJson["MIDDAY_INSOL"]["ANN"] > 6 ? 1 : 0) +
@@ -147,7 +168,7 @@ export async function normalizeData(county, state, POWERAPI1, POWERAPI2, POWERAP
         (powerJson["TS"] && powerJson["TS"]["ANN"] > -15 && powerJson["TS"]["ANN"] < -12 ? 1 : 0) +
         (powerJson["FROST_DAYS"] && powerJson["FROST_DAYS"]["ANN"] < 101 ? 1 : 0);
 
-    let wind_rank = (powerJson["ALLSKY_KT"] && powerJson["ALLSKY_KT"]["ANN"] > 0.5 ? 1 : 0) +
+    let wind_rank = 2 + (powerJson["ALLSKY_KT"] && powerJson["ALLSKY_KT"]["ANN"] > 0.5 ? 1 : 0) +
         (powerJson["CLOUD_AMT"] && powerJson["CLOUD_AMT"]["ANN"] > 60 ? 1 : 0) +
         (powerJson["TOA_SW_DWN"] && powerJson["TOA_SW_DWN"]["ANN"] > 3.5 ? 1 : 0) +
         (powerJson["MIDDAY_INSOL"] && powerJson["MIDDAY_INSOL"]["ANN"] > 6 ? 1 : 0) +
@@ -222,14 +243,40 @@ router.get("/debug/:state/:county", async (req, res) => {
     res.json(data);
 });
 
-router.get('/debug/load-data', async (req, res) => {
-const client = await newMongoConnection()
+router.get('/debug/preload-docs', async (req, res) => {
+    const client = await newMongoConnection()
     const db = client.db("Lab6");
     const collection = db.collection("NASA Data");
     let data = await preloadDocs()
     await collection.insertMany(data);
     res.json({success: "Data loaded"});
 })
+
+router.get('/debug/add-data/:state/:county', async (req, res) => {
+
+    console.log("state: " + req.params["state"]);
+    console.log("county: " + req.params["county"]);
+
+    const client = await newMongoConnection()
+    const db = client.db(config.ETL_DB_NAME);
+    const collection = db.collection(config.ETL_COLLECTION_NAME);
+    let nasaData;
+    try {
+        nasaData = await getNASAData(req.params["state"], req.params["county"]);
+    } catch (e) {
+        console.log(e);
+    }
+
+    if (!nasaData) {
+        return res.json({error: "Error getting data"});
+    }
+    let _id = Math.random().toString(36).substring(2, 15)
+    let dbResponse = await collection.insertOne({_id, ...nasaData});
+    if (!dbResponse) {
+        return res.json({error: "Error inserting data"});
+    }
+    return res.json({success: "Data loaded"});
+});
 
 
 export default router;
