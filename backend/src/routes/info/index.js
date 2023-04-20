@@ -38,13 +38,25 @@ router.post("/:state/:county", async (req, res) => {
             throw new Error("Invalid query")
         };
 
-    const data =( await collection).find(query).toArray();
-    if ((await data).length === 0) {
-        let data = (await collection).insertOne(req.body);
-        res.json({success: "Data added", data});
+    if( req.body && req.body.length === 0) {
+        return res.json({error: "No data found"});
     }
 
-    res.json({error: "Data already exists"});
+    try{
+
+        let _id = Math.random().toString(36).substr(2, 9);
+
+        const data = (await collection).insertOne(
+            {...req.body, ...county, ...state, ..._id}
+        );
+
+        return res.json({success: "Data added", data});
+
+    }catch (err) {
+
+        return res.json({error: err.message});
+    
+    }
 });
 
 router.delete("/:state/:county", async (req, res) => {
