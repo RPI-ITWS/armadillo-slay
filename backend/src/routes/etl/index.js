@@ -1,15 +1,16 @@
-import counties from './counties.json';
-import states from './states.json';
-import connection from '../../db/mongo';
-import { Router } from "express";
-import {validate} from "../../util";
+import counties from './counties.json' assert { type: "json" };
+import states from './states.json' assert { type: "json" };
+import {newMongoConnection} from '../../db/index.js';
+import {Router} from "express";
+import {validate} from "../../util/index.js";
+import {config} from "../../config/index.js";
+
 const statesMap = new Map(Object.entries(states));
 const countiesMap = new Map(counties.map(county => [county.fips_code, county]));
 
-
 const router = Router();
 
-async function preloadDocs() {
+export async function preloadDocs() {
 
     for (let i = 0; i < 101; i++) {
 
@@ -39,10 +40,11 @@ async function preloadDocs() {
 
         let newCollection = await normalizeData(name_1, stateAbbr, POWERAPI1, POWERAPI2, POWERAPI3, censusAPI, eiaAPI);
 
-        
+
     }
 }
-async function addData(county, state) {
+
+export async function addData(county, state) {
     let stateFips;
     for (const [fips, stateAbbr] of statesMap) {
         if (stateAbbr === state) {
@@ -80,10 +82,11 @@ async function addData(county, state) {
         let eiaAPI = "https://api.eia.gov/v2/electricity/state-electricity-profiles/summary/data/?frequency=annual&data[0]=average-retail-price&data[1]=capacity-ipp&data[2]=carbon-dioxide-lbs&data[3]=direct-use&data[4]=generation-elect-utils&facets[stateID][]=" + state + "&sort[0][column]=period&sort[0][direction]=desc&offset=0&length=5000&api_key=" + process.env.EIA_API_KEY;
 
         let newCollection = await normalizeData(county, state, POWERAPI1, POWERAPI2, POWERAPI3, censusAPI, eiaAPI);
-        
+
     }
 }
-function parseFIPS(fips_code) {
+
+export function parseFIPS(fips_code) {
     fips_code = fips_code.toString();
     let state;
     state = fips_code.substring(0, 2);
@@ -91,7 +94,9 @@ function parseFIPS(fips_code) {
     county = fips_code.substring(2, 5);
     return [state, county];
 }
-async function normalizeData(county, state, POWERAPI1, POWERAPI2, POWERAPI3, censusAPI, eiaAPI) {
+
+export async function normalizeData(county, state, POWERAPI1, POWERAPI2, POWERAPI3, censusAPI, eiaAPI) {
+
     let collection = {
         county: county,
         state: state,
@@ -114,9 +119,9 @@ async function normalizeData(county, state, POWERAPI1, POWERAPI2, POWERAPI3, cen
 
     let powerParams = powerParams1.concat(powerParams2, powerParams3);
 
-    let powerJson = { ...powerJson1.properties.parameter, ...powerJson2.properties.parameter, ...powerJson3.properties.parameter };
+    let powerJson = {...powerJson1.properties.parameter, ...powerJson2.properties.parameter, ...powerJson3.properties.parameter};
 
-    let powerJsonParams = { ...powerJson1.parameters, ...powerJson2.parameters, ...powerJson3.parameters };
+    let powerJsonParams = {...powerJson1.parameters, ...powerJson2.parameters, ...powerJson3.parameters};
 
     powerParams.map((param) => {
         collection.NASA_power_data[param] = powerJson[param];
@@ -124,7 +129,7 @@ async function normalizeData(county, state, POWERAPI1, POWERAPI2, POWERAPI3, cen
         collection.NASA_power_data[param].longname = powerJsonParams[param].longname;
     });
 
-    solar_rank = (powerJson["ALLSKY_KT"] && powerJson["ALLSKY_KT"]["ANN"] > 0.5 ? 1 : 0) +
+    let solar_rank = (powerJson["ALLSKY_KT"] && powerJson["ALLSKY_KT"]["ANN"] > 0.5 ? 1 : 0) +
         (powerJson["CLOUD_AMT"] && powerJson["CLOUD_AMT"]["ANN"] > 60 ? 1 : 0) +
         (powerJson["TOA_SW_DWN"] && powerJson["TOA_SW_DWN"]["ANN"] > 3.5 ? 1 : 0) +
         (powerJson["MIDDAY_INSOL"] && powerJson["MIDDAY_INSOL"]["ANN"] > 6 ? 1 : 0) +
@@ -143,7 +148,7 @@ async function normalizeData(county, state, POWERAPI1, POWERAPI2, POWERAPI3, cen
         (powerJson["TS"] && powerJson["TS"]["ANN"] > -15 && powerJson["TS"]["ANN"] < -12 ? 1 : 0) +
         (powerJson["FROST_DAYS"] && powerJson["FROST_DAYS"]["ANN"] < 101 ? 1 : 0);
 
-    wind_rank = (powerJson["ALLSKY_KT"] && powerJson["ALLSKY_KT"]["ANN"] > 0.5 ? 1 : 0) +
+    let wind_rank = (powerJson["ALLSKY_KT"] && powerJson["ALLSKY_KT"]["ANN"] > 0.5 ? 1 : 0) +
         (powerJson["CLOUD_AMT"] && powerJson["CLOUD_AMT"]["ANN"] > 60 ? 1 : 0) +
         (powerJson["TOA_SW_DWN"] && powerJson["TOA_SW_DWN"]["ANN"] > 3.5 ? 1 : 0) +
         (powerJson["MIDDAY_INSOL"] && powerJson["MIDDAY_INSOL"]["ANN"] > 6 ? 1 : 0) +
@@ -162,7 +167,7 @@ async function normalizeData(county, state, POWERAPI1, POWERAPI2, POWERAPI3, cen
         (powerJson["WS10M"] && powerJson["WS10M"]["ANN"] > 180 && powerJson["WS10M"]["ANN"] < 270 ? 1 : 0) +
         (powerJson["WS50M"] && powerJson["WS50M"]["ANN"] > 180 && powerJson["WS50M"]["ANN"] < 270 ? 1 : 0);
 
-    hydro_rank = (powerJson["ALLSKY_KT"] && powerJson["ALLSKY_KT"]["ANN"] > 0.5 ? 1 : 0) +
+    let hydro_rank = (powerJson["ALLSKY_KT"] && powerJson["ALLSKY_KT"]["ANN"] > 0.5 ? 1 : 0) +
         (powerJson["CLOUD_AMT"] && powerJson["CLOUD_AMT"]["ANN"] < 60 ? 1 : 0) +
         (powerJson["TOA_SW_DWN"] && powerJson["TOA_SW_DWN"]["ANN"] > 3.5 ? 1 : 0) +
         (powerJson["MIDDAY_INSOL"] && powerJson["MIDDAY_INSOL"]["ANN"] > 6 ? 1 : 0) +
@@ -188,8 +193,7 @@ async function normalizeData(county, state, POWERAPI1, POWERAPI2, POWERAPI3, cen
     console.log("state: " + state);
     collection.household_income = censusJson[1][1];
     for (let i = 0; i < electricJson.response.data.length; i++) {
-        let stateStats = void 0;
-        stateStats = {
+        let stateStats = {
             YEAR: electricJson.response.data[i].period,
             AVERAGE_RETAIL_PRICE: electricJson.response.data[i]["average-retail-price"],
             CAPACITY_IPP: electricJson.response.data[i]["capacity-ipp"],
@@ -211,34 +215,40 @@ router.get('/:state/:county', async (req, res) => {
         return res.json({error: "Invalid query"})
     };
 
-    const client = await connection();
-    const db = client.db("Lab6");
-    const collection = db.collection("NASA Data");
+    const client = await newMongoConnection()
+
+    const db = client.db(config.ETL_DB_NAME);
+    const collection = db.collection(config.ETL_COLLECTION_NAME);
     const data = await collection.find(query).toArray();
 
 
     if (data.length === 0) {
-       res.status(404).json({
-           error: "No documents found"
-       })
+        res.status(404).json({
+            error: "No documents found"
+        })
     }
     res.json(data);
 });
 
-router.post('/:state/:county', async (req, res) => {
-    res.send("Data Updated");
+router.post("/:command", async (req, res) => {
+
+    const command = req.params["command"];
+    const client = await newMongoConnection()
+    const db = client.db("Lab6");
+    const collection = db.collection("NASA Data");
+
+    if (command === "load") {
+        let data = await load();
+        await collection.insertMany(data);
+        res.json({success: "Data loaded"});
+    } else if (command === "clear") {
+        await collection.deleteMany({});
+        res.json({success: "Data cleared"});
+    } else {
+        res.json({error: "Invalid command"});
+    }
+
 });
 
-router.delete('/:state/:county', async (req, res) => {
-    res.send("Data Updated");
-});
 
-router.put('/:state/:county', async (req, res) => {
-    res.send("Data Updated");
-});
-
-router.get("/preload", async (req, res) => {
-
-export {
-    router as etl
-}
+export default router;

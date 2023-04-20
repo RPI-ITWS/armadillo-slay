@@ -1,7 +1,10 @@
-import {collection} from "../db/mongo";
-import {validate} from "../util";
-import {addData} from "../controllers/add-data";
+import {validate} from "../../util/index.js";
 import {Router} from "express";
+import {newMongoConnection} from "../../db/index.js";
+import {config} from "../../config/index.js";
+const collection = newMongoConnection().then(client => {
+    return client.db(config.INFO_DB_NAME).collection(config.INFO_COLLECTION_NAME);
+});
 
 
 const router = Router();
@@ -16,9 +19,9 @@ router.get("/:state/:county", async (req, res) => {
             throw new Error("Invalid query")
         };
 
-    const data = await collection.find(query).toArray();
+    const data = (await collection).find(query).toArray();
 
-    if (data && data.length === 0) {
+    if (data && (await data).length === 0) {
         res.json({error: "No data found"});
     }
 
@@ -35,9 +38,9 @@ router.post("/:state/:county", async (req, res) => {
             throw new Error("Invalid query")
         };
 
-    const data = collection.find(query).toArray();
-    if (data.length === 0) {
-        let data = await addData(county, state);
+    const data =( await collection).find(query).toArray();
+    if ((await data).length === 0) {
+        let data = (await collection).insertOne(req.body);
         res.json({success: "Data added", data});
     }
 
@@ -55,21 +58,21 @@ router.delete("/:state/:county", async (req, res) => {
     let data;
     try {
 
-        data = await collection.find(query).toArray();
+        data = (await collection).find(query).toArray();
     } catch (err) {
         return res.status(404).json({error: err.message})
     }
 
-    if (data.length === 0) {
+    if ((await data).length === 0) {
         res.json({error: "No data to delete"});
     }
-    const result = await collection.deleteOne(query);
+    const result = (await collection).deleteOne(query);
     result
         ? res.json({success: "Data deleted"})
         : res.json({error: "Data not deleted"});
 });
 
-router.put("/:state/:county", async (req, res) => {
+router.delete("/:state/:county", async (req, res) => {
     let state = req.params["state"];
     let county = req.params["county"];
 
@@ -79,7 +82,7 @@ router.put("/:state/:county", async (req, res) => {
     };
 
     // find one query and if exists update it
-    const result = collection.updateOne(query, {$set: req.body});
+    const result = (await collection).updateOne(query, {$set: req.body});
 
     if (!result) {
         return res.json({error: "Data not updated"});
@@ -87,3 +90,5 @@ router.put("/:state/:county", async (req, res) => {
 
     return res.json({success: "Data updated"});
 });
+
+export default router;
