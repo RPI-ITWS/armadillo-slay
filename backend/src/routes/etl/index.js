@@ -38,7 +38,7 @@ export async function preloadDocs() {
 
         let eiaAPI = "https://api.eia.gov/v2/electricity/state-electricity-profiles/summary/data/?frequency=annual&data[0]=average-retail-price&data[1]=capacity-ipp&data[2]=carbon-dioxide-lbs&data[3]=direct-use&data[4]=generation-elect-utils&facets[stateID][]=" + stateAbbr + "&sort[0][column]=period&sort[0][direction]=desc&offset=0&length=5000&api_key=" + process.env.EIA_API_KEY;
 
-        let newCollection = await normalizeData(name_1, stateAbbr, POWERAPI1, POWERAPI2, POWERAPI3, censusAPI, eiaAPI);
+        let newCollection = await normalizeData(name_1, stateAbbr, lat, lng, POWERAPI1, POWERAPI2, POWERAPI3, censusAPI, eiaAPI);
 
 
     }
@@ -81,7 +81,7 @@ export async function addData(county, state) {
 
         let eiaAPI = "https://api.eia.gov/v2/electricity/state-electricity-profiles/summary/data/?frequency=annual&data[0]=average-retail-price&data[1]=capacity-ipp&data[2]=carbon-dioxide-lbs&data[3]=direct-use&data[4]=generation-elect-utils&facets[stateID][]=" + state + "&sort[0][column]=period&sort[0][direction]=desc&offset=0&length=5000&api_key=" + process.env.EIA_API_KEY;
 
-        let newCollection = await normalizeData(county, state, POWERAPI1, POWERAPI2, POWERAPI3, censusAPI, eiaAPI);
+        let newCollection = await normalizeData(county, state, lat, lng, POWERAPI1, POWERAPI2, POWERAPI3, censusAPI, eiaAPI);
 
     }
 }
@@ -95,11 +95,13 @@ export function parseFIPS(fips_code) {
     return [state, county];
 }
 
-export async function normalizeData(county, state, POWERAPI1, POWERAPI2, POWERAPI3, censusAPI, eiaAPI) {
+export async function normalizeData(county, state, lat, lng, POWERAPI1, POWERAPI2, POWERAPI3, censusAPI, eiaAPI) {
 
     let collection = {
         county: county,
         state: state,
+        lat: lat,
+        long: lng,
         NASA_power_data: {},
         household_income: 0,
         EIA_data: [],
@@ -129,7 +131,7 @@ export async function normalizeData(county, state, POWERAPI1, POWERAPI2, POWERAP
         collection.NASA_power_data[param].longname = powerJsonParams[param].longname;
     });
 
-    let solar_rank = (powerJson["ALLSKY_KT"] && powerJson["ALLSKY_KT"]["ANN"] > 0.5 ? 1 : 0) +
+    let solar_rank = 2 + (powerJson["ALLSKY_KT"] && powerJson["ALLSKY_KT"]["ANN"] > 0.5 ? 1 : 0) +
         (powerJson["CLOUD_AMT"] && powerJson["CLOUD_AMT"]["ANN"] > 60 ? 1 : 0) +
         (powerJson["TOA_SW_DWN"] && powerJson["TOA_SW_DWN"]["ANN"] > 3.5 ? 1 : 0) +
         (powerJson["MIDDAY_INSOL"] && powerJson["MIDDAY_INSOL"]["ANN"] > 6 ? 1 : 0) +
@@ -148,7 +150,7 @@ export async function normalizeData(county, state, POWERAPI1, POWERAPI2, POWERAP
         (powerJson["TS"] && powerJson["TS"]["ANN"] > -15 && powerJson["TS"]["ANN"] < -12 ? 1 : 0) +
         (powerJson["FROST_DAYS"] && powerJson["FROST_DAYS"]["ANN"] < 101 ? 1 : 0);
 
-    let wind_rank = (powerJson["ALLSKY_KT"] && powerJson["ALLSKY_KT"]["ANN"] > 0.5 ? 1 : 0) +
+    let wind_rank = 2 + (powerJson["ALLSKY_KT"] && powerJson["ALLSKY_KT"]["ANN"] > 0.5 ? 1 : 0) +
         (powerJson["CLOUD_AMT"] && powerJson["CLOUD_AMT"]["ANN"] > 60 ? 1 : 0) +
         (powerJson["TOA_SW_DWN"] && powerJson["TOA_SW_DWN"]["ANN"] > 3.5 ? 1 : 0) +
         (powerJson["MIDDAY_INSOL"] && powerJson["MIDDAY_INSOL"]["ANN"] > 6 ? 1 : 0) +
