@@ -1,3 +1,5 @@
+import dotenv from "dotenv";
+dotenv.config();
 export const MONGO_URI = process.env.MONGO_URI || "mongodb://localhost:27017";
 
 export const ENVIRONMENT = process.env.NODE_ENV || "development";
@@ -14,7 +16,9 @@ export const config = {
     ETL_DB_NAME: "etl",
     INFO_COLLECTION_NAME: "info",
     INFO_DB_NAME: "info",
-    ETL_CENSUS_API_KEY: process.env.ETL_CENSUS_API_KEY,
+    CENSUS_API_KEY: process.env.CENSUS_API_KEY,
+    EIA_API_KEY: process.env.EIA_API_KEY,
+
 
 }
 
