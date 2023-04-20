@@ -14,6 +14,8 @@ export const config = {
     ETL_DB_NAME: "etl",
     INFO_COLLECTION_NAME: "info",
     INFO_DB_NAME: "info",
+    ETL_CENSUS_API_KEY: process.env.ETL_CENSUS_API_KEY,
+
 }
 
 

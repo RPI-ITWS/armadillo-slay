@@ -11,7 +11,7 @@ const countiesMap = new Map(counties.map(county => [county.fips_code, county]));
 const router = Router();
 
 export async function preloadDocs() {
-
+    let documentList = [];
     for (let i = 0; i < 101; i++) {
 
         let lat = counties[i]['lat'];
@@ -40,8 +40,10 @@ export async function preloadDocs() {
 
         let newCollection = await normalizeData(name_1, stateAbbr, POWERAPI1, POWERAPI2, POWERAPI3, censusAPI, eiaAPI);
 
-
+        documentList.push(newCollection);
     }
+
+    return documentList;
 }
 
 export async function addData(county, state) {
@@ -63,27 +65,24 @@ export async function addData(county, state) {
     if (!countyEntry) {
         console.log(`County ${county} not found in state ${state}`);
         return;
-    } else {
-        let countyFips = countyEntry.fips_code;
-        countyFips = countyFips.toString();
-        countyFips = countyFips.substring(2, 5);
-        let lat = countyEntry.lat;
-        let lng = countyEntry.lng;
-
-        console.log(countyFips, stateFips, lat, lng);
-
-        let POWERAPI1 = "https://power.larc.nasa.gov/api/temporal/climatology/point?parameters=ALLSKY_SFC_SW_DWN,ALLSKY_SFC_SW_DWN_HR,ALLSKY_SFC_SW_DNI,ALLSKY_SFC_SW_DIFF,ALLSKY_KT,TOA_SW_DWN,ALLSKY_SFC_PAR_TOT,ALLSKY_SRF_ALB,SI_EF_TILTED_SURFACE,CLRSKY_SFC_SW_DWN&community=RE&longitude=" + lng + "&latitude=" + lat + "&format=JSON";
-
-        let POWERAPI2 = "https://power.larc.nasa.gov/api/temporal/climatology/point?parameters=SG_NOON,SG_HR_SET_ANG,SG_MID_COZ_ZEN_ANG,SG_DEC,SG_DAY_HOURS,SG_HRZ_HR,SG_DAY_COZ_ZEN_AVG,T2M,T2MDEW,T2MWET,TS,FROST_DAYS,QV2M,RH2M,PRECTOTCORR,PRECTOTCORR_SUM&community=RE&longitude=" + lng + "&latitude=" + lat + "&format=JSON";
-
-        let POWERAPI3 = "https://power.larc.nasa.gov/api/temporal/climatology/point?parameters=PS,WS10M,WD50M,WD10M,WS50M,CLOUD_AMT,SOLAR_DEFICITS_CONSEC_MONTH,INSOL_CONSEC_MONTH,MIDDAY_INSOL,EQUIV_NO_SUN_CONSEC_MONTH&community=RE&longitude=" + lng + "&latitude=" + lat + "&format=JSON";
-        let censusAPI = "https://api.census.gov/data/2019/acs/acs5?get=NAME,B19013_001E&for=county:" + countyFips + "&in=state:" + stateFips + "&key=" + process.env.CENSUS_API_KEY;
-
-        let eiaAPI = "https://api.eia.gov/v2/electricity/state-electricity-profiles/summary/data/?frequency=annual&data[0]=average-retail-price&data[1]=capacity-ipp&data[2]=carbon-dioxide-lbs&data[3]=direct-use&data[4]=generation-elect-utils&facets[stateID][]=" + state + "&sort[0][column]=period&sort[0][direction]=desc&offset=0&length=5000&api_key=" + process.env.EIA_API_KEY;
-
-        let newCollection = await normalizeData(county, state, POWERAPI1, POWERAPI2, POWERAPI3, censusAPI, eiaAPI);
-
     }
+
+    let countyFips = countyEntry.fips_code;
+    countyFips = countyFips.toString();
+    countyFips = countyFips.substring(2, 5);
+    let lat = countyEntry.lat;
+    let lng = countyEntry.lng;
+
+    console.log(countyFips, stateFips, lat, lng);
+
+    let POWERAPI1 = "https://power.larc.nasa.gov/api/temporal/climatology/point?parameters=ALLSKY_SFC_SW_DWN,ALLSKY_SFC_SW_DWN_HR,ALLSKY_SFC_SW_DNI,ALLSKY_SFC_SW_DIFF,ALLSKY_KT,TOA_SW_DWN,ALLSKY_SFC_PAR_TOT,ALLSKY_SRF_ALB,SI_EF_TILTED_SURFACE,CLRSKY_SFC_SW_DWN&community=RE&longitude=" + lng + "&latitude=" + lat + "&format=JSON";
+    let POWERAPI2 = "https://power.larc.nasa.gov/api/temporal/climatology/point?parameters=SG_NOON,SG_HR_SET_ANG,SG_MID_COZ_ZEN_ANG,SG_DEC,SG_DAY_HOURS,SG_HRZ_HR,SG_DAY_COZ_ZEN_AVG,T2M,T2MDEW,T2MWET,TS,FROST_DAYS,QV2M,RH2M,PRECTOTCORR,PRECTOTCORR_SUM&community=RE&longitude=" + lng + "&latitude=" + lat + "&format=JSON";
+    let POWERAPI3 = "https://power.larc.nasa.gov/api/temporal/climatology/point?parameters=PS,WS10M,WD50M,WD10M,WS50M,CLOUD_AMT,SOLAR_DEFICITS_CONSEC_MONTH,INSOL_CONSEC_MONTH,MIDDAY_INSOL,EQUIV_NO_SUN_CONSEC_MONTH&community=RE&longitude=" + lng + "&latitude=" + lat + "&format=JSON";
+    let censusAPI = "https://api.census.gov/data/2019/acs/acs5?get=NAME,B19013_001E&for=county:" + countyFips + "&in=state:" + stateFips + "&key=" + config.ETL_CENSUS_API_KEY;
+    let eiaAPI = "https://api.eia.gov/v2/electricity/state-electricity-profiles/summary/data/?frequency=annual&data[0]=average-retail-price&data[1]=capacity-ipp&data[2]=carbon-dioxide-lbs&data[3]=direct-use&data[4]=generation-elect-utils&facets[stateID][]=" + state + "&sort[0][column]=period&sort[0][direction]=desc&offset=0&length=5000&api_key=" + process.env.EIA_API_KEY;
+
+    let newCollection = await normalizeData(county, state, POWERAPI1, POWERAPI2, POWERAPI3, censusAPI, eiaAPI);
+    return newCollection;
 }
 
 export function parseFIPS(fips_code) {
@@ -206,49 +205,31 @@ export async function normalizeData(county, state, POWERAPI1, POWERAPI2, POWERAP
     return collection;
 }
 
-router.get('/:state/:county', async (req, res) => {
-    let state = req.params["state"];
-    let county = req.params["county"];
 
-
-    const query = validate(county, state) ? {county, state} : () => {
-        return res.json({error: "Invalid query"})
-    };
-
-    const client = await newMongoConnection()
-
-    const db = client.db(config.ETL_DB_NAME);
-    const collection = db.collection(config.ETL_COLLECTION_NAME);
-    const data = await collection.find(query).toArray();
-
-
-    if (data.length === 0) {
-        res.status(404).json({
-            error: "No documents found"
-        })
-    }
-    res.json(data);
-});
-
-router.post("/:command", async (req, res) => {
-
-    const command = req.params["command"];
+router.get("/debug", async (req, res) => {
     const client = await newMongoConnection()
     const db = client.db("Lab6");
     const collection = db.collection("NASA Data");
+    const data = await collection.find({}).toArray();
+    res.json(data);
+})
 
-    if (command === "load") {
-        let data = await load();
-        await collection.insertMany(data);
-        res.json({success: "Data loaded"});
-    } else if (command === "clear") {
-        await collection.deleteMany({});
-        res.json({success: "Data cleared"});
-    } else {
-        res.json({error: "Invalid command"});
-    }
-
+router.get("/debug/:state/:county", async (req, res) => {
+    const client = await newMongoConnection()
+    const db = client.db("Lab6");
+    const collection = db.collection("NASA Data");
+    const data = await collection.find({state: req.params["state"], county: req.params["county"]}).toArray();
+    res.json(data);
 });
+
+router.get('/debug/load-data', async (req, res) => {
+const client = await newMongoConnection()
+    const db = client.db("Lab6");
+    const collection = db.collection("NASA Data");
+    let data = await preloadDocs()
+    await collection.insertMany(data);
+    res.json({success: "Data loaded"});
+})
 
 
 export default router;
