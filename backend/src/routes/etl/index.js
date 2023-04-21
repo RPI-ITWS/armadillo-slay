@@ -1,36 +1,36 @@
-import counties from './counties.json' assert {type: 'json'};
-import states from './states.json' assert {type: 'json'};
 import {newMongoConnection} from '../../db/index.js';
 import {Router} from "express";
 import {config} from "../../config/index.js";
 import { preloadDocs } from './preloadDocs.js';
-import { getNASAData } from './getNASAData';
+import { preloadStateDocs } from './preloadStateDocs.js';
+import { getNASAData } from './getNASAData.js';
 
-export const statesMap = new Map(Object.entries(states));
-export const countiesMap = new Map(counties.map(county => [county.fips_code, county]));
+
 
 const router = Router();
 
 router.get("/debug", async (req, res) => {
     const client = await newMongoConnection()
-    const db = client.db("Lab6");
-    const collection = db.collection("NASA Data");
+    const db = client.db(config.ETL_DB_NAME);
+    const collection = db.collection(config.ETL_COLLECTION_NAME);
     const data = await collection.find({}).toArray();
     res.json(data);
 })
 
 router.get("/debug/:state/:county", async (req, res) => {
     const client = await newMongoConnection()
-    const db = client.db("Lab6");
-    const collection = db.collection("NASA Data");
+    const db = client.db(config.ETL_DB_NAME);
+    const collection = db.collection(config.ETL_COLLECTION_NAME);
     const data = await collection.find({state: req.params["state"], county: req.params["county"]}).toArray();
     res.json(data);
 });
 
 router.get('/debug/preload-docs', async (req, res) => {
     const client = await newMongoConnection()
-    const db = client.db("Lab6");
-    const collection = db.collection("NASA Data");
+    const db = client.db(config.ETL_DB_NAME);
+    const collection = db.collection(config.ETL_COLLECTION_NAME);
+    let data2 = await preloadStateDocs()
+    await collection.insertMany(data2);
     let data = await preloadDocs()
     await collection.insertMany(data);
     res.json({success: "Data loaded"});

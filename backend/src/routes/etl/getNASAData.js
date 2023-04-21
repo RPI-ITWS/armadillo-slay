@@ -1,6 +1,11 @@
+import counties from './counties.json' assert {type: 'json'};
+import states from './states.json' assert {type: 'json'};
 import { config } from "../../config/index.js";
 import { normalizeData } from "./normalizeData.js";
-import { statesMap, countiesMap } from '.';
+
+export const statesMap = new Map(Object.entries(states));
+export const countiesMap = new Map(counties.map(county => [county.fips_code, county]));
+
 
 
 export async function getNASAData(state, county) {

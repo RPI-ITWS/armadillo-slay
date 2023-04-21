@@ -1,4 +1,4 @@
-import states from './states.json';
+import states from './states.json' assert { type: "json" };
 import { normalizeSData } from "./normalizeSData.js";
 
 

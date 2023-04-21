@@ -1,12 +1,11 @@
-import counties from './counties.json';
-import states from './states.json';
+import counties from './counties.json' assert {type: 'json'};
+import states from './states.json' assert {type: 'json'};
 import { normalizeData } from "./normalizeData.js";
-import { parseFIPS } from '.';
 
 
 export async function preloadDocs() {
     let documentList = [];
-    for (let i = 0; i < 101; i++) {
+    for (let i = 0; i < 3000; i++) {
 
         let lat = counties[i]['lat'];
 

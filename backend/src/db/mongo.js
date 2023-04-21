@@ -1,18 +1,19 @@
-import {MongoClient} from 'mongodb';
-import dotenv from "dotenv";
-import {config} from "../config/index.js";
+import { MongoClient } from 'mongodb';
+import { config } from "../config/index.js";
 
-function newMongoConnection() {
+async function newMongoConnection() {
   const url = config.MONGO_URI;
-  if(!url) {
+  if (!url) {
     throw new Error("MONGO_URL not defined in env");
   }
 
   const options = {
+    useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1
 
   };
 
-  return  MongoClient.connect(url, options);
+  const client = await MongoClient.connect(url, options);
+  return client
 
 
 }
