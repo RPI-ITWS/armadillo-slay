@@ -4,21 +4,20 @@ import { Searchbar } from '../../components/searchbar/Searchbar';
 import FilterAndSort from './FilterAndSort';
 import DownloadFiles from './DownloadFiles';
 import './Data-module.css'
+  
 
 function Data() {
 
-    const [OneData, setOneData] = useState(null);
+    const staticData = fetch("https://armadilloslay.eastus.cloudapp.azure.com/api/v1/etl/debug/NY/Rensselaer")
+        .then(response => response.json())
+        .then(data => {
+            console.log(data);
+            return data;
+        });
+    
+    
 
-    // async function getOneData(index) {
-    //     const response = await fetch(``);
-    //     const data = await response.json();
-    //     if (data.length == 0){
-    //         alert("No data found for this county");
-    //     }
-    //     else {
-    //         setOneData(data);
-    //     }
-    // }
+    
 
     const handleButtonAClicked = () => { //filter
     }
@@ -51,52 +50,33 @@ function Data() {
                     onButtonBClicked={handleButtonBClicked}
                 />
 
+                <p className='data-header'>Showing results for: Rensselaer, NY</p>
+
                 <Table striped bordered hover>
-                    {/* {OneData && (
                     <thead>
-                        <br />
                         <tr>
-                            <th>{OneData.key }</th>
-                            <th>{OneData.parameter1}</th>
-                            <th>{OneData.parameter2}</th>
-                            <th>{OneData.parameter3}</th>
-                            <th>{OneData.parameter4}</th>
-                            <th>{OneData.SolarScore}</th>
-                            <th>{OneData.WindScore}</th>
-                            <th>{OneData.HydroScore}</th>
-                            <th>{OneData.BestOption}</th>
-                        </tr>
-                    </thead>
-                )} */}
-                    <thead>
-                        <br />
-                        <tr>
-                            <th>#</th>
-                            <th>First Name</th>
-                            <th>Last Name</th>
-                            <th>Username</th>
+                            <th>Year</th>
+                            <th>JAN</th>
+                            <th>FEB</th>
+                            <th>MAR</th>
+                            <th>APR</th>
+                            <th>MAY</th>
+                            <th>JUN</th>
+                            <th>JUL</th>
+                            <th>AUG</th>
+                            <th>SEP</th>
+                            <th>OCT</th>
+                            <th>NOV</th>
+                            <th>DEC</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>Mark</td>
-                            <td>Otto</td>
-                            <td>@mdo</td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>Jacob</td>
-                            <td>Thornton</td>
-                            <td>@fat</td>
-                        </tr>
-                        <tr>
-                            <td>3</td>
-                            <td>Larry</td>
-                            <td>the Bird</td>
-                            <td>@twitter</td>
-                        </tr>
+                        <p>
+                            
+                        </p>
                     </tbody>
+                    
+                   
                 </Table>
 
                 <br />

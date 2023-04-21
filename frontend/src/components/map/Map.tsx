@@ -1,14 +1,15 @@
 import React, { useEffect, useRef } from 'react';
-import ReactMapGL, { Marker, ViewState } from 'react-map-gl';
+import ReactMapGL, { Marker, ViewState, NavigationControl } from 'react-map-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 
 const MAPBOX_TOKEN = 'pk.eyJ1IjoiY2lhbmhvd2VsbCIsImEiOiJjbGdxYmkwMDcwYnZkM3JzYm9pM2hpZDdqIn0.2CJzcHp1dfHl5tw-Nl6Lrw';
 
 function Map() {
+ 
   const [viewport, setViewport] = React.useState({
     latitude: 42.6737,
     longitude: -73.747253,
-    zoom: 10,
+    zoom: 9,
     width: '100vw',
     height: '100vh',
   });
@@ -18,7 +19,7 @@ function Map() {
       {...viewport}
       mapboxAccessToken={MAPBOX_TOKEN}
       mapStyle="mapbox://styles/cianhowell/clgqbk66k00fq01p9cfeu425v"
-      onResize={() => {setViewport(viewport)}}
+      onViewportChange={(viewport: ViewState) => setViewport(viewport)}
     >
       <Marker latitude={42.6737} longitude={-73.747253}>
         <div>
@@ -32,7 +33,17 @@ function Map() {
           />
         </div>
       </Marker>
+      <NavigationControl
+        onViewportChange={(viewport: ViewState) => setViewport(viewport)}
+        showCompass={false}
+        style={{
+          position: 'absolute',
+          top: 10,
+          left: 10,
+        }}
+      />
     </ReactMapGL>
+
   );
 }
 

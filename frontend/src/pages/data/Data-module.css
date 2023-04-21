@@ -15,4 +15,10 @@ h1 {
     background: #a3a3a3;
     margin: 0;
     width: 100%;
+    background-image: url("./assets/data-bg.gif");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    background-blend-mode: multiply;
+    
 }
