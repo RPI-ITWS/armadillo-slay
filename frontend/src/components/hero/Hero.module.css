@@ -1,33 +1,19 @@
-.search-gif {
-    width: 100%;
-    min-height: 100vh;
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-color: rgba(0, 0, 0, 0.5);
-    background-blend-mode: multiply;
-}
-
 .landing-container {
+    min-height: 100vh;
     display: flex;
     justify-content: center;
     flex-direction: column;
     background-color: rgba(0, 0, 0, 0.5);
-    background-image: url('/clouds.gif');
+    background-image: url('./assets/hero-background.gif');
     background-repeat: no-repeat;
     background-size: cover;
     background-blend-mode: multiply;
-    position: relative;
-    top: 0px;
-    left: 0px;
-    right: 0px;
-    padding: 2em;
-
 }
 
 .landing-container h2 {
-    font-size: 2rem;
-    font-weight: bold;
+    font-size: var(--fs-head-md);
     color: #fff;
+    font-family: var(--header-font);
 }
 .hero-headline{
     font-size: 2rem;

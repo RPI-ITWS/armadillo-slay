@@ -31,9 +31,7 @@ function Hero() {
 
     return <div className={styles["landing-container"]}>
 
-        <h2 className={styles["hero-headline"]}> Search for Data </h2>
-
-        <Whitespace height={"2em"} width={"2em"}/>
+        <h2 className={styles["hero-headline"]}> Search data by County </h2>
 
         <Searchbar/>
 
