@@ -29,8 +29,8 @@ router.get('/debug/preload-docs', async (req, res) => {
     const client = await newMongoConnection()
     const db = client.db(config.ETL_DB_NAME);
     const collection = db.collection(config.ETL_COLLECTION_NAME);
-    let data2 = await preloadStateDocs()
-    await collection.insertMany(data2);
+    // let data2 = await preloadStateDocs()
+    // await collection.insertMany(data2);
     let data = await preloadDocs()
     await collection.insertMany(data);
     res.json({success: "Data loaded"});
@@ -54,8 +54,7 @@ router.get('/debug/add-data/:state/:county', async (req, res) => {
     if (!nasaData) {
         return res.json({error: "Error getting data"});
     }
-    let _id = Math.random().toString(36).substring(2, 15)
-    let dbResponse = await collection.insertOne({_id, ...nasaData});
+    let dbResponse = await collection.insertOne(nasaData);
     if (!dbResponse) {
         return res.json({error: "Error inserting data"});
     }

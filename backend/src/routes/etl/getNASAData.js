@@ -42,7 +42,7 @@ export async function getNASAData(state, county) {
 
     let newCollection;
     try {
-        newCollection = await normalizeData(county, state, lat, lng, POWERAPI1, POWERAPI2, POWERAPI3, censusAPI);
+        newCollection = await normalizeData(state, county, lat, lng, POWERAPI1, POWERAPI2, POWERAPI3, censusAPI);
     } catch (e) {
         console.log(e);
         return;
