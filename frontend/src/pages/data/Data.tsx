@@ -1,23 +1,39 @@
 import React, { Component, useState } from 'react';
 import { Container, Table } from 'react-bootstrap';
 import { Searchbar } from '../../components/searchbar/Searchbar';
+import FilterAndSort from './FilterAndSort';
+import DownloadFiles from './DownloadFiles';
 import './Data-module.css'
 
 function Data() {
 
     const [OneData, setOneData] = useState(null);
 
-    async function getOneData(index) {
-        const response = await fetch(``);
-        const data = await response.json();
-        if (data.length == 0){
-            alert("No data found for this county");
-        }
-        else {
-            setOneData(data);
-        }
+    // async function getOneData(index) {
+    //     const response = await fetch(``);
+    //     const data = await response.json();
+    //     if (data.length == 0){
+    //         alert("No data found for this county");
+    //     }
+    //     else {
+    //         setOneData(data);
+    //     }
+    // }
+
+    const handleButtonAClicked = () => { //filter
     }
 
+    const handleButtonBClicked = () => { //sort 
+    }
+
+    const handleButtonCClicked = () => { //json
+    }
+
+    const handleButtonDClicked = () => { //csv
+    }
+
+    const handleButtonEClicked = () => { //xlsx
+    }
 
     return (
         <Container fluid className='px-0 min' style={{ }}>
@@ -26,14 +42,12 @@ function Data() {
                 <h1>Data</h1>
                 <br />
                 <Searchbar />   
-                <br />
-                <br />
             </div>
 
-            {/* <ButtonGroup
+            <FilterAndSort
                 onButtonAClicked={handleButtonAClicked}
                 onButtonBClicked={handleButtonBClicked}
-             /> */}
+            />
 
             <Table striped bordered hover>
                 {/* {OneData && (
@@ -43,9 +57,12 @@ function Data() {
                             <th>{OneData.key }</th>
                             <th>{OneData.parameter1}</th>
                             <th>{OneData.parameter2}</th>
+                            <th>{OneData.parameter3}</th>
+                            <th>{OneData.parameter4}</th>
                             <th>{OneData.SolarScore}</th>
                             <th>{OneData.WindScore}</th>
                             <th>{OneData.HydroScore}</th>
+                            <th>{OneData.BestOption}</th>
                         </tr>
                     </thead>
                 )} */}
@@ -81,6 +98,15 @@ function Data() {
                  </Table>
 
                  <br />
+
+            <DownloadFiles
+                onButtonCClicked={handleButtonCClicked}
+                onButtonDClicked={handleButtonDClicked}
+                onButtonEClicked={handleButtonEClicked}
+            />
+
+                <br />
+                <br />
         </Container>
     );
 }
