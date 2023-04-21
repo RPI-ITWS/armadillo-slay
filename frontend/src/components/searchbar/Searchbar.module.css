@@ -14,34 +14,18 @@
     background-position: 0.5rem;
 }
 
-div.css-yk16xz-control {
-    background-color: rgba(255, 255, 255, 0);
-    height: 3rem;
-    border-radius: 0.5rem;
-    border: none;
-    font-size: var(--fs-body);
-    font-family: var(--body-font);
+#search-location-selector{
+    background-color: rgba(255, 255, 255, 0.75);
+    
+}
+#search-location-selector a{
     color: black;
 }
 
-div.css-1pahdxg-control, .css-1pahdxg-control:hover, .css-1pahdxg-control:focus, .css-1pahdxg-control:active {
-    background-color: rgba(255, 255, 255, 0);
-    height: 3rem;
-    border-radius: 0.5rem;
-    border: none;
-    font-size: var(--fs-body);
-    font-family: var(--body-font);
-    color: black !important;
-    box-shadow: none !important;
+#search-location-selector a:hover{
+   color: black;
 }
 
-div.css-26l3qy-menu {
-    background-color: rgba(255, 255, 255, 0.75);
-    font-size: var(--fs-body);
-    font-family: var(--body-font);
-    color: black !important;
-    box-shadow: none !important;
-}
 
 .search-gif {
     display: flex;
@@ -68,10 +52,10 @@ input#search-location-input::placeholder {
     width: 15%;
     border-radius: 0.5rem;
     border: none;
-    font-size: var(--fs-body);
-    font-family: var(--body-font);
     background-color: black;
     color: white;
+    border: 1px solid white;
+    box-shadow: none;
     height: 3rem;
     margin-left: 0.5rem;
 
@@ -79,10 +63,10 @@ input#search-location-input::placeholder {
 
 #search-location-btn:focus,
 #search-location-btn:active,
-#search-location-btn:hover {
-    outline: none;
-    box-shadow: 0 0 0 0.2rem rgba(0, 0, 0, 0.25);
-    border-color: none;
-    background-color: #a3a3a3;
+#search-location-btn:hover
+#search-location-btn:active:focus {
+    background-color: white;
     color: black;
+    border: 1px solid black;
+    box-shadow: none;
 }

@@ -21,7 +21,7 @@ function HeroInfoItem(
     return <Col xl={4} lg={12} className={styles["hero-info-item"]}>
         <h3 className={styles.heroItemTitle}>{title}</h3>
         <p className={styles.landingDescription}>{description}</p>
-        <Link to={link}> <Button className={styles.heroItemButton}>{linkText}</Button> </Link>
+        <Link to={link}> <Button className={styles["hero-item-btn"]}>{linkText}</Button> </Link>
     </Col>;
 }
 

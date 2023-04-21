@@ -1,4 +1,4 @@
-import {Row} from "react-bootstrap";
+import {Container, Row} from "react-bootstrap";
 import {Searchbar} from "../searchbar";
 import {HeroInfoItem} from "./HeroInfoItem";
 import styles from "./Hero.module.css";
@@ -30,12 +30,13 @@ function Hero() {
 
 
     return <div className={styles["landing-container"]}>
+        <Container fluid="xxl">
 
-        <h2 className={styles["hero-headline"]}> Search data by County </h2>
+        <h2 className={`pb-3 ${styles["hero-headline"]}`}> Search for Data </h2>
 
         <Searchbar/>
 
-        <Row className={styles["hero-item-list"]}>
+        <Row className={`pb-5 pt-5 ${styles["hero-item-list"]}`}>
 
             {heroItems.map((item, index) => {
                 return <HeroInfoItem
@@ -48,7 +49,9 @@ function Hero() {
             })}
 
         </Row>
+        </Container>
     </div>
+    
 }
 
 export {

@@ -19,6 +19,8 @@
 
 body {
   background-color: white;
+  min-width: 100vw;
+  min-height: 100vh;
 }
 
 a.nav-link {
@@ -266,4 +268,36 @@ code {
   :root {
     font-size: 110%;
   }
+}
+
+input.rbt-input-main {
+  background-color: rgba(255, 255, 255, 0.75);
+  color: black;
+  border-radius: 0.5rem;
+  width: 100%;
+  border: none;
+  padding-left: 2rem;
+  background-image: url("./assets/search-icon.svg");
+  background-repeat: no-repeat;
+  background-position: 0.5rem;
+}
+
+input.rbt-input-main:focus, input.rbt-input-main:active, input.rbt-input-main:hover {
+  outline: none;
+  box-shadow: none;
+  background-color: rgba(255, 255, 255, 0.75);
+}
+
+input.rbt-input-main::placeholder {
+  color: black;
+  opacity: 1;
+}
+.rbt-highlight-text {
+  background-color: white;
+}
+
+div.rbt{
+  width: 80%;
+  display: flex;
+  
 }

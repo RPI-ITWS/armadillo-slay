@@ -28,7 +28,7 @@ function Section(
             <h3 className="display-4">{title}</h3>
             <p className="lead body-txt-left">{description}</p>
             {callToAction && callback &&
-                <Button className={styles.callToActionButton} onClick={callback}>{callToAction}</Button>}
+                <Button className={styles["cta-btn"]} onClick={callback}>{callToAction}</Button>}
         </Col>
 
     let right =
@@ -42,7 +42,7 @@ function Section(
 
 
     return (
-        <Row className="py-2">
+        <Row className="py-5">
             {
                 image ? left : right
             }

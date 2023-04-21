@@ -24,9 +24,9 @@ function AppNavbar() {
 
     return (
         <Navbar expand="lg" fixed='top' variant='dark'
-                className={`py-3 ${scrolled ? 'bg-black' : 'bg-transparent'} transition-bg`}>
+                className={`py-3 ${scrolled ? 'bg-black' : 'bg-transparent'} transition-bg `}>
             <Container fluid="lg">
-                <Navbar.Brand className=' align-items-center' as={Link} to="/home">NASA Renewable Energy
+                <Navbar.Brand className='align-items-center' as={Link} to="/home">NASA Renewable Energy
                     Data</Navbar.Brand>
                 <Navbar.Toggle aria-controls="navbar-nav"/>
                 <Navbar.Collapse id="navbar-nav" className='justify-content-end'>
