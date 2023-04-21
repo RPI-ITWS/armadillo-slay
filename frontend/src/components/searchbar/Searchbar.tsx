@@ -14,12 +14,12 @@ function Searchbar(props:any) {
     const onChange = (selected: any) => {
         setSingleSelections(selected);
 
-        // for (let i = 0; i < counties.length; i++) {
-        //     if (counties[i].county + ", " + counties[i].state === selected[0]) {
-        //         props.countyCallBack(selected);
-        //         break;
-        //     }
-        // }
+        for (let i = 0; i < counties.length; i++) {
+            if (counties[i].county + ", " + counties[i].state === selected[0]) {
+                props.countyCallBack(selected);
+                break;
+            }
+        }
     }
 
 

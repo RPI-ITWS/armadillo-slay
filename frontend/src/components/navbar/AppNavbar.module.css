@@ -11,3 +11,7 @@ a.navbar-brand {
 .transition-bg {
     transition: all 0.4s ease-in-out;
 }
+
+.active {
+    color: white;
+}

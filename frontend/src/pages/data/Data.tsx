@@ -36,21 +36,23 @@ function Data() {
     }
 
     return (
-        <Container fluid className='px-0 min' style={{ }}>
+        <Container fluid className='px-0 min'>
             <div className='Header'>
-                <br />
-                <h1>Data</h1>
-                <br />
-                <Searchbar />   
+                <h1 className='data-header p-5'>Data</h1>
+                <Container fluid="xl">
+                    <Searchbar />
+                </Container>
             </div>
 
-            <FilterAndSort
-                onButtonAClicked={handleButtonAClicked}
-                onButtonBClicked={handleButtonBClicked}
-            />
+            <Container fluid="xl">
 
-            <Table striped bordered hover>
-                {/* {OneData && (
+                <FilterAndSort
+                    onButtonAClicked={handleButtonAClicked}
+                    onButtonBClicked={handleButtonBClicked}
+                />
+
+                <Table striped bordered hover>
+                    {/* {OneData && (
                     <thead>
                         <br />
                         <tr>
@@ -66,47 +68,48 @@ function Data() {
                         </tr>
                     </thead>
                 )} */}
-                     <thead>
+                    <thead>
                         <br />
-                     <tr>
-                         <th>#</th>
-                         <th>First Name</th>
-                         <th>Last Name</th>
-                         <th>Username</th>
-                     </tr>
-                     </thead>
-                     <tbody>
-                <tr>
-                         <td>1</td>
-                         <td>Mark</td>
-                         <td>Otto</td>
-                         <td>@mdo</td>
-                     </tr>
-                     <tr>
-                         <td>2</td>
-                         <td>Jacob</td>
-                         <td>Thornton</td>
-                         <td>@fat</td>
-                     </tr>
-                     <tr>
-                         <td>3</td>
-                         <td>Larry</td>
-                         <td>the Bird</td>
-                         <td>@twitter</td>
-                     </tr>
-                     </tbody>
-                 </Table>
+                        <tr>
+                            <th>#</th>
+                            <th>First Name</th>
+                            <th>Last Name</th>
+                            <th>Username</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>Mark</td>
+                            <td>Otto</td>
+                            <td>@mdo</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>Jacob</td>
+                            <td>Thornton</td>
+                            <td>@fat</td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>Larry</td>
+                            <td>the Bird</td>
+                            <td>@twitter</td>
+                        </tr>
+                    </tbody>
+                </Table>
 
-                 <br />
+                <br />
 
-            <DownloadFiles
-                onButtonCClicked={handleButtonCClicked}
-                onButtonDClicked={handleButtonDClicked}
-                onButtonEClicked={handleButtonEClicked}
-            />
+                <DownloadFiles
+                    onButtonCClicked={handleButtonCClicked}
+                    onButtonDClicked={handleButtonDClicked}
+                    onButtonEClicked={handleButtonEClicked}
+                />
 
                 <br />
                 <br />
+            </Container>
         </Container>
     );
 }
