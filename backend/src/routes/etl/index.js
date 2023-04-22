@@ -32,7 +32,9 @@ router.get('/debug/preload-docs', async (req, res) => {
     // let data2 = await preloadStateDocs()
     // await collection.insertMany(data2);
     let data = await preloadDocs()
-    await collection.insertMany(data);
+    const validDocuments = data.filter(doc => doc !== undefined && doc !== null);
+    await collection.insertMany(validDocuments);
+    
     res.json({success: "Data loaded"});
 })
 

@@ -1,5 +1,9 @@
 
 export async function normalizeSData(Abbrv, eiaAPI) {
+    if (!Abbrv) {
+        console.log(`No state abbreviation found for ${Abbrv}`);
+        return;
+    }
     let collection = {
         state: Abbrv,
         EIA_data: []
