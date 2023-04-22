@@ -29,15 +29,15 @@ router.get('/debug/preload-docs', async (req, res) => {
     const client = await newMongoConnection()
     const db = client.db(config.ETL_DB_NAME);
     const collection = db.collection(config.ETL_COLLECTION_NAME);
-    // let data2 = await preloadStateDocs()
-    // await collection.insertMany(data2);
+    let data2 = await preloadStateDocs()
+    console.log(data2);
+    await collection.insertMany(data2);
     let data = await preloadDocs()
     const validDocuments = data.filter(doc => doc !== undefined && doc !== null);
     await collection.insertMany(validDocuments);
-    
     res.json({success: "Data loaded"});
 })
-
+ 
 router.get('/debug/add-data/:state/:county', async (req, res) => {
 
     console.log("state: " + req.params["state"]);

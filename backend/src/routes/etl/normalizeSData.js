@@ -4,31 +4,28 @@ export async function normalizeSData(Abbrv, eiaAPI) {
         console.log(`No state abbreviation found for ${Abbrv}`);
         return;
     }
-    let collection = {
-        state: Abbrv,
-        EIA_data: []
-    };
-    await fetch(eiaAPI)
-        .then(res => res.json())
-        .then(eiaData => {
-            console.log(eiaData);
-            for (let i = 0; i < eiaData.response.data.length; i++) {
-                let stateStats = {
-                    YEAR: eiaData.response.data[i].period,
-                    AVERAGE_RETAIL_PRICE: eiaData.response.data[i]["average-retail-price"],
-                    CAPACITY_IPP: eiaData.response.data[i]["capacity-ipp"],
-                    CARBON_DIOXIDE_LBS: eiaData.response.data[i]["carbon-dioxide-lbs"],
-                    DIRECT_USE: eiaData.response.data[i]["direct-use"],
-                    GENERATION_ELECT_UTILS: eiaData.response.data[i]["generation-elect-utils"]
-                };
-                collection.EIA_data.push(stateStats);
-                return collection;
-            }
 
-        }
-    )
+    try {
+        const res = await fetch(eiaAPI);
+        const eiaData = await res.json();
+        const dataArr = eiaData.response.data;
+        const EIA_data = dataArr.map(dataItem => ({
+            YEAR: dataItem.period,
+            AVERAGE_RETAIL_PRICE: dataItem["average-retail-price"],
+            CAPACITY_IPP: dataItem["capacity-ipp"],
+            CARBON_DIOXIDE_LBS: dataItem["carbon-dioxide-lbs"],
+            DIRECT_USE: dataItem["direct-use"],
+            GENERATION_ELECT_UTILS: dataItem["generation-elect-utils"],
+        }));
 
-   
+        return {
+            state: Abbrv,
+            EIA_data,
+        };
+    } catch (error) {
+        console.error(`Error fetching data for state ${Abbrv}:`, error);
+        return;
+    }
 }
 
 

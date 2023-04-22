@@ -6,7 +6,7 @@ export async function preloadStateDocs() {
      const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
   const documentPromises = Object.keys(states).map(async function (key, index) {
-    await delay(10000); // Add a 5-second delay between each API call
+    await delay(index * 1000); 
     const stateAbbr = states[key];
     const eiaAPI =
       "https://api.eia.gov/v2/electricity/state-electricity-profiles/summary/data/?frequency=annual&data[0]=average-retail-price&data[1]=capacity-ipp&data[2]=carbon-dioxide-lbs&data[3]=direct-use&data[4]=generation-elect-utils&facets[stateID][]=" +
