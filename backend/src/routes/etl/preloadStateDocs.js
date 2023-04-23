@@ -1,5 +1,6 @@
 import states from './states.json' assert { type: "json" };
 import { normalizeSData } from "./normalizeSData.js";
+import {config} from "../../config/index.js";
 
 
 export async function preloadStateDocs() {
@@ -12,7 +13,7 @@ export async function preloadStateDocs() {
       "https://api.eia.gov/v2/electricity/state-electricity-profiles/summary/data/?frequency=annual&data[0]=average-retail-price&data[1]=capacity-ipp&data[2]=carbon-dioxide-lbs&data[3]=direct-use&data[4]=generation-elect-utils&facets[stateID][]=" +
       stateAbbr +
       "&sort[0][column]=period&sort[0][direction]=desc&offset=0&length=5000&api_key=" +
-      process.env.EIA_API_KEY;
+      config.EIA_API_KEY;
 
     const newCollection = await normalizeSData(stateAbbr, eiaAPI);
     return newCollection;

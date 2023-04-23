@@ -1,8 +1,10 @@
-import express from "express";
-import api from "./routes/index.js"
-import listEndpoints from "express-list-endpoints";
+import * as express from "express";
+import {router as api} from "./routes/index.js"
+import * as listEndpoints from "express-list-endpoints";
 
 const app = express();
+
+app.use(express.json());
 
 app.use((req, res, next) => { console.log(`[${new Date().toISOString()}] ${req.method} ${req.originalUrl}`); next(); });
 

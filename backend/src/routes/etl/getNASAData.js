@@ -1,8 +1,14 @@
-import counties from './counties.json' assert {type: 'json'};
-import states from './states.json' assert {type: 'json'};
-import { config } from "../../config/index.js";
+import * as counties from './counties.json' assert {type: 'json'};
+import * as states from './states.json' assert {type: 'json'};
+import { config } from "../../config";
 import { normalizeData } from "./normalizeData.js";
 
+if(!counties) {
+    Error("Counties not found");
+}
+if(!states) {
+    Error("States not found");
+}
 export const statesMap = new Map(Object.entries(states));
 export const countiesMap = new Map(counties.map(county => [county.fips_code, county]));
 
