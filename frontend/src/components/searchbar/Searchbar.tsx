@@ -10,13 +10,15 @@ function Searchbar(props:any) {
     let options = counties.map((county) => {
         return county.county + ", " + county.state;
     });
-    
+
     const onChange = (selected: any) => {
         setSingleSelections(selected);
+    }
 
+    const handleSearch = () => {
         for (let i = 0; i < counties.length; i++) {
-            if (counties[i].county + ", " + counties[i].state === selected[0]) {
-                props.countyCallBack(selected);
+            if (counties[i].county + ", " + counties[i].state === singleSelections[0]) {
+                props.onSearch(counties[i]);
                 break;
             }
         }
@@ -32,13 +34,14 @@ function Searchbar(props:any) {
                 onChange={ onChange}
                 selected={singleSelections}
             />
-            <Button id={styles["search-location-btn"]}>Search</Button>
+            <Button id={styles["search-location-btn"]} onClick={handleSearch}>Search</Button>
         </InputGroup>
     )
 }
 
 export {
-    Searchbar
+    Searchbar,
+    County
 }
 
 class County {

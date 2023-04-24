@@ -4,69 +4,32 @@ import 'mapbox-gl/dist/mapbox-gl.css';
 
 const MAPBOX_TOKEN = 'pk.eyJ1IjoiY2lhbmhvd2VsbCIsImEiOiJjbGdxYmkwMDcwYnZkM3JzYm9pM2hpZDdqIn0.2CJzcHp1dfHl5tw-Nl6Lrw';
 
-function Map() {
+function Map({ zoom, center, children }: any) {
 
   const [viewport, setViewport] = useState({
-    latitude: 42.6737,
-    longitude: -73.747253,
-    zoom: 9,
+    latitude: center.lat,
+    longitude: center.lng,
+    zoom: zoom,
     width: '100vw',
     height: '100vh',
   });
 
-  const [popupVisible, setPopupVisible] = useState(true);
-
-  const handleMarkerClick = () => {
-    setPopupVisible(true);
-  };
-
-  const handlePopupClose = () => {
-    setPopupVisible(false);
-  };
+  useEffect(() => {
+    setViewport(prevState => ({
+      ...prevState,
+      latitude: center.lat,
+      longitude: center.lng,
+    }))
+  }, [center])
 
   return (
     <ReactMapGL
       {...viewport}
       mapboxAccessToken={MAPBOX_TOKEN}
       mapStyle="mapbox://styles/cianhowell/clgqbk66k00fq01p9cfeu425v"
-      onViewportChange={(viewport: ViewState) => setViewport(viewport)}
     >
-      <Marker latitude={42.6737} longitude={-73.747253}>
-        <div>
-          <img
-            src="https://docs.mapbox.com/mapbox-gl-js/assets/custom_marker.png"
-            alt="marker"
-            style={{
-              height: '20px',
-              width: '20px',
-            }}
-          />
-        </div>
-      </Marker>
-      {popupVisible && (
-        <Popup
-          latitude={42.6737}
-          longitude={-73.747253}
-          closeButton={true}
-          closeOnClick={false}
-          onClose={handlePopupClose}
-          anchor="top"
-        >
-          <div>Household Income: $68,991
-            <br />
-            Renewable Energy Ranking:
-            <br />
-            1. Solar
-            <br />
-            2. Wind
-            <br />
-            3. Hydroelectric
-            <br />
-          </div>
-        </Popup>
-      )}
+      {children}
       <NavigationControl
-        onViewportChange={(viewport: ViewState) => setViewport(viewport)}
         showCompass={false}
         style={{
           position: 'absolute',
