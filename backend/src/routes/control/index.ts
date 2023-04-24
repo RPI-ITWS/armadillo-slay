@@ -34,7 +34,7 @@ router.post('/start-etl-job-all-counties', async (req, res) => {
     if (!state)
         return res.status(400).json({message: 'State is Required'});
 
-    etlInstance.startETLJobAllCounties(state);
+    etlInstance.startETLJobForAllCountiesInState(state)
     res.status(200).json({message: `ETL process started for ${state}`});
 });
 

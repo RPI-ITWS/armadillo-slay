@@ -126,7 +126,7 @@ function fetchCensusData(stateFips, countyFips) {
         });
     });
 }
-var ETLManager = /** @class */ (function (_super) {
+var EtlManager = /** @class */ (function (_super) {
     __extends(ETLManager, _super);
     function ETLManager() {
         var _this = _super.call(this) || this;
@@ -300,4 +300,4 @@ var ETLManager = /** @class */ (function (_super) {
     };
     return ETLManager;
 }(EventEmitter));
-exports.etlInstance = new ETLManager();
+exports.etlInstance = new EtlManager();
