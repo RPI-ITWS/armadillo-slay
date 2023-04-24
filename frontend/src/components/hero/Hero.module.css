@@ -1,5 +1,6 @@
 .landing-container {
     min-height: 100vh;
+    min-width: 100vw;
     display: flex;
     justify-content: center;
     flex-direction: column;
@@ -51,16 +52,16 @@
 }
 
 video{
-    position: absolute;
     top: 0;
     left: 0;
-    min-width: 100%;
-    min-height: 100%;
-    width: auto;
-    height: auto;
+    width: 100vw;
+    height: 100vh;
     z-index: -100;
     background-size: cover;
-    filter: blur(0px);
+    justify-content: center;
+    background-color: black;
+    object-fit: cover;
+    
 
 }
 
