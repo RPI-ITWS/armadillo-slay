@@ -3,6 +3,7 @@ import Navbar from 'react-bootstrap/Navbar';
 import {Container} from 'react-bootstrap';
 import {Link} from 'react-router-dom';
 import {useState} from 'react';
+import styles from './AppNavbar.module.css';
 
 function AppNavbar() {
 
@@ -29,7 +30,7 @@ function AppNavbar() {
                 <Navbar.Brand className='align-items-center' as={Link} to="/home">NASA Renewable Energy
                     Data</Navbar.Brand>
                 <Navbar.Toggle aria-controls="navbar-nav"/>
-                <Navbar.Collapse id="navbar-nav" className='justify-content-end'>
+                <Navbar.Collapse id={styles["navbar-nav"]} className='justify-content-end'>
                     <Nav className="mr-auto  align-items-center">
                         <Nav.Link as={Link} to="/home"
                                   className={`px-lg-3 ${isActive('/home') ? 'active' : ''}`}>Home</Nav.Link>

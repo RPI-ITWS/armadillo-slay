@@ -15,3 +15,9 @@ a.navbar-brand {
 .active {
     color: white;
 }
+
+@media only screen and (max-width: 992px) {
+    #navbar-nav{
+        background-color: rgba(0, 0, 0, 0.85);
+    }
+}
