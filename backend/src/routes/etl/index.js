@@ -10,10 +10,21 @@ import { getNASAData } from './getNASAData.js';
 const router = Router();
 
 router.get("/debug", async (req, res) => {
+    const { solarRank, windRank, hydroRank } = req.query;
     const client = await newMongoConnection()
     const db = client.db(config.ETL_DB_NAME);
     const collection = db.collection(config.ETL_COLLECTION_NAME);
-    const data = await collection.find({}).toArray();
+    const condition = {};
+    if (solarRank) {
+        condition.solar_rank = +solarRank;
+    }
+    if (windRank) {
+        condition.wind_rank = +windRank;
+    }
+    if (hydroRank) {
+        condition.hydro_rank = +hydroRank;
+    }
+    const data = await collection.find(condition).toArray();
     res.json(data);
 })
 
@@ -37,7 +48,7 @@ router.get('/debug/preload-docs', async (req, res) => {
     await collection.insertMany(validDocuments);
     res.json({success: "Data loaded"});
 })
- 
+
 router.get('/debug/add-data/:state/:county', async (req, res) => {
 
     console.log("state: " + req.params["state"]);
