@@ -1,6 +1,6 @@
 import React, { Component, useState, useEffect } from 'react';
 import { Container, Table } from 'react-bootstrap';
-import { Searchbar } from '../../components/searchbar/Searchbar';
+import {Searchbar} from '../../components/searchbar/Searchbar';
 import FilterAndSort from './FilterAndSort';
 import DownloadFiles from './DownloadFiles';
 import './Data-module.css'
@@ -10,16 +10,12 @@ import './Data-module.css'
 function Data() {
 
     const [staticData, setStaticData] = useState<any>(null);
-
-    useEffect(() => {
-        fetch('https://armadilloslay.eastus.cloudapp.azure.com/api/v1/etl/debug/NY/Rensselaer')
-            .then((response) => response.json())
-            .then((data) => {
-                setStaticData(data);
-            });
-    }, []);
+    const [selectedCounty, setSelectedCounty] = useState("");
+    var c = "";
+    var s = "";
 
     const renderTableRows = () => {
+
         if (!staticData) {
             return null;
         }
@@ -51,7 +47,27 @@ function Data() {
     const handleButtonDClicked = () => { //csv
     }
 
-    const handleButtonEClicked = () => { //xlsx
+    function countyCallBack(county: string) {
+        c = "";
+        s = "";
+
+        for (var i = 0; i < county[0].length; i++) {
+            if (county[0][i] === ",") {
+                s = county[0].substring(i + 2, county[0].length);
+                break;
+            }
+            c += county[0][i];
+        }
+
+        console.log(s + " " + c);
+        fetch ('https://armadilloslay.eastus.cloudapp.azure.com/api/v1/etl/debug/'+s+'/'+c)
+            .then((response) => response.json())
+            .then((data) => {
+                setStaticData(data);
+            }
+        );
+        
+        setSelectedCounty(county);
     }
 
     return (
@@ -59,9 +75,13 @@ function Data() {
             <div className='Header'>
                 <h1 className='data-header p-5'>Data</h1>
                 <Container fluid="xl">
-                    <Searchbar />
+                    <Searchbar countyCallBack={countyCallBack} />
                 </Container>
             </div>
+
+            <br />
+
+            <h2 className="text-center">Now Viewing Results For: <br /> {selectedCounty} </h2>
 
             <Container fluid="xl">
 
@@ -70,12 +90,14 @@ function Data() {
                     onButtonBClicked={handleButtonBClicked}
                 />
 
-                <p className='data-header'>Showing results for: Rensselaer, NY</p>
+                <br />
+                
                 {staticData && (
-                    <Table striped bordered hover size='sm' >
+                  <div className="table-responsive">
+                    <Table className="table table-striped table-bordered table-hover table-sm w-100" >
                         <thead>
                             <tr>
-                                <th>Data</th>
+                                {/* <th>Data</th>
                                 <th>Annual</th>
                                 <th>JAN</th>
                                 <th>FEB</th>
@@ -90,7 +112,7 @@ function Data() {
                                 <th>NOV</th>
                                 <th>DEC</th>
                                 <th>Units</th>
-                                <th>Name</th>
+                                <th>Name</th> */}
                             </tr>
                         </thead>
                         <tbody>
@@ -99,6 +121,7 @@ function Data() {
 
 
                     </Table>
+                  </div>
                 )}
 
                 <br />
@@ -106,7 +129,6 @@ function Data() {
                 <DownloadFiles
                     onButtonCClicked={handleButtonCClicked}
                     onButtonDClicked={handleButtonDClicked}
-                    onButtonEClicked={handleButtonEClicked}
                 />
 
                 <br />

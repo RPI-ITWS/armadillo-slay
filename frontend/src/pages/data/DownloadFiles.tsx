@@ -4,10 +4,9 @@ import './FilterAndSort.css';
 interface DownloadFilesProps {
   onButtonCClicked: () => void;
   onButtonDClicked: () => void;
-  onButtonEClicked: () => void;
 }
 
-function DownloadFiles({ onButtonCClicked, onButtonDClicked, onButtonEClicked }: DownloadFilesProps) {
+function DownloadFiles({ onButtonCClicked, onButtonDClicked }: DownloadFilesProps) {
   const handleButtonClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     const buttonName = event.currentTarget.name;
     switch (buttonName) {
@@ -19,10 +18,6 @@ function DownloadFiles({ onButtonCClicked, onButtonDClicked, onButtonEClicked }:
         onButtonDClicked();
         break;
     
-      case 'buttonE':
-        onButtonEClicked();
-        break;
-
       default:
         console.warn(`Unknown button name: ${buttonName}`);
     }
@@ -33,8 +28,6 @@ function DownloadFiles({ onButtonCClicked, onButtonDClicked, onButtonEClicked }:
       <button name="buttonC" className="ReactButton" onClick={handleButtonClick}>JSON File</button>
       &nbsp;
       <button name="buttonD" className="ReactButton" onClick={handleButtonClick}>CSV File</button>
-      &nbsp;
-      <button name="buttonE" className="ReactButton" onClick={handleButtonClick}>XLSX File</button>
     </div>
   );
 }
