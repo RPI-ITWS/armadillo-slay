@@ -7,7 +7,7 @@
       "DOM.Iterable",
       "ESNext"
     ],
-    "allowJs": false,
+    "allowJs": true,
     "skipLibCheck": true,
     "esModuleInterop": false,
     "allowSyntheticDefaultImports": true,
@@ -26,7 +26,18 @@
     }
   },
   "include": [
-    "src"
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "src/**/*.js",
+    "src/**/*.jsx",
+    "src/**/*.json",
+    "src/**/*.mp4",
+    "src/**/*.webm",
+    "src/**/*.png",
+    "src/**/*.jpg",
+    "src/**/*.jpeg",
+    "src/**/*.gif",
+    "src/**/*.svg",
   ],
   "references": [
     {

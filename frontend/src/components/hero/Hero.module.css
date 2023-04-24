@@ -1,14 +1,11 @@
 .landing-container {
     min-height: 100vh;
+    min-width: 100vw;
     display: flex;
     justify-content: center;
     flex-direction: column;
-    background-color: rgba(0, 0, 0, 0.5);
-    background-image: url('./assets/hero-background.gif');
-    background-repeat: no-repeat;
+    /*background: url('src/components/assets/hero-background.mp4');*/
     background-size: cover;
-    background-position: center;
-    background-blend-mode: multiply;
 }
 
 .landing-container h2 {
@@ -53,6 +50,21 @@
     border: 1px solid black;
     box-shadow: none;
 }
+
+video{
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -100;
+    background-size: cover;
+    justify-content: center;
+    background-color: black;
+    object-fit: cover;
+    
+
+}
+
 
 
   
