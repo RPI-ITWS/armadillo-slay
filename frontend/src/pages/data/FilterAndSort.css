@@ -1,5 +1,10 @@
-.Buttons {
-    padding-left: 41%;
+.FilterButton {
+    margin-left: 40%;
+}
+
+.dropdown-menu {
+    max-height: 150px;
+    overflow-y: auto;
 }
 
 .ButtonsDownload {
