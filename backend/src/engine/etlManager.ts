@@ -92,4 +92,4 @@ class EtlManager extends EventEmitter {
     }
 }
 
-export const etlInstance = new EtlManager()
+export const etlInstance = new EtlManager();
