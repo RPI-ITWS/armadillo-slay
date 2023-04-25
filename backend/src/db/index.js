@@ -1,0 +1,1 @@
+export {newMongoConnection} from './mongo.js';

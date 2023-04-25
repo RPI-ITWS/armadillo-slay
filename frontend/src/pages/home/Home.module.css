@@ -1,0 +1,125 @@
+
+.search-gif {
+    width: 100%;
+    min-height: 100vh;
+    background-image: url('/clouds3_1024.gif');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-color: rgba(0, 0, 0, 0.5);
+    background-blend-mode: multiply;
+}
+
+.bottom-footer-txt {
+    font-size: var(--fs-body);
+    font-family: var(--header-font);
+    color: white;
+}
+
+.bottom-footer-txt:hover,
+.bottom-footer-txt:focus,
+.bottom-footer-txt:active {
+    color: #a3a3a3;
+}
+
+.search-gif {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+div.css-yk16xz-control {
+    background-color: rgba(255, 255, 255, 0);
+    height: 3rem;
+    border-radius: 0.5rem;
+    border: none;
+    font-size: var(--fs-body);
+    font-family: var(--body-font);
+    color: black;
+}
+
+div.css-1pahdxg-control, .css-1pahdxg-control:hover, .css-1pahdxg-control:focus, .css-1pahdxg-control:active {
+    background-color: rgba(255, 255, 255, 0);
+    height: 3rem;
+    border-radius: 0.5rem;
+    border: none;
+    font-size: var(--fs-body);
+    font-family: var(--body-font);
+    color: black !important;
+    box-shadow: none !important;
+}
+
+div.css-26l3qy-menu {
+    background-color: rgba(255, 255, 255, 0.75);
+    font-size: var(--fs-body);
+    font-family: var(--body-font);
+    color: black !important;
+    box-shadow: none !important;
+}
+
+
+.hero-item-button {
+    background-color: black;
+    color: white;
+    border: none;
+    border-radius: 0.5rem;
+    font-size: var(--fs-body);
+    font-family: var(--body-font);
+    padding: 0.75rem;
+}
+
+.hero-item-button:hover,
+.hero-item-button:focus,
+.hero-item-button:active {
+    background-color: #a3a3a3;
+    color: black;
+}
+
+.hero-item-info {
+    text-align: center;
+}
+
+
+.body-txt-left,
+.body-txt-right {
+    font-size: var(--fs-body);
+}
+
+.landing-code {
+    overflow: scroll;
+}
+
+.body-code-left {
+    max-width: 100vw;
+    overflow: scroll;
+}
+
+code {
+    display: block;
+    background-color: black;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 14px;
+    font-family: "Fira Code", monospace;
+    color: #FFFFFF;
+    line-height: 1.5;
+    overflow: scroll;
+}
+
+/* Define styles for the syntax highlighting */
+.keyword {
+    color: #B06AB3;
+}
+
+.string {
+    color: #98C379;
+}
+
+.operator {
+    color: #56B6C2;
+}
+
+.comment {
+    color: #ABB2BF;
+    font-style: italic;
+}

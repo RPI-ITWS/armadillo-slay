@@ -1,0 +1,14 @@
+.inner {
+    display: flex;
+    height: 100%;
+}
+
+.right {
+    width: 250px;
+    padding: 10px;
+    border: 1px solid #333;
+}
+
+.left {
+    flex: 1;
+}

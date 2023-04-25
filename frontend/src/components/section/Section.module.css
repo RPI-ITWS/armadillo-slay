@@ -1,0 +1,13 @@
+.cta-btn{
+    background-color: black;
+    color: white;
+    border: 1px solid white;
+    box-shadow: none;
+}
+
+.cta-btn:hover, .cta-btn:focus, .cta-btn:active, .cta-btn:active:focus{
+    background-color: white;
+    color: black;
+    border: 1px solid black;
+    box-shadow: none;
+}

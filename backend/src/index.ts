@@ -1,20 +1,23 @@
-import express from 'express';
-import api from './routes/api';
+import * as express from "express";
+import {router as api} from "./routes/index.js"
+import * as listEndpoints from "express-list-endpoints";
 
-const app = express();
+function main(args: string[]){
 
-app.use('/api/v1', api);
+  const app = express();
 
-app.get('/', (req, res) => {
-  res.json({
-    message: 'Welcome to Armadillo Slay!',
-    environment: process.env.NODE_ENV || 'development',
-    version: process.env.npm_package_version
-        ? `v${process.env.npm_package_version}`: 'unknown'
+  app.use(express.json());
+
+  app.use((req, res, next) => { console.log(`[${new Date().toISOString()}] ${req.method} ${req.originalUrl}`); next(); });
+
+  app.use("/api/v1", api);
+
+  const port = process.env.PORT || 3000;
+
+  app.listen(port, () => {
+    console.log(`Server started on port ${port}`);
+    console.log(listEndpoints(app));
   });
-});
+}
 
-const port = process.env.PORT || 3000;
-app.listen(port, () => {
-  console.log(`Server started on port ${port}`);
-});
+main(process.argv.slice(2));
