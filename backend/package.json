@@ -6,6 +6,7 @@
   "scripts": {
     "start": "node src/index.js",
     "dev": "nodemon --watch 'src/**/*.{ts,js}' --exec 'tsc && node dist/index.js'",
+    "windows_dev": "nodemon --watch src/**/*.{ts,js} --exec \"node_modules\\.bin\\tsc && node dist\\index.js\"",
     "lint": "eslint 'src/**/*.{ts,js}'"
   },
   "dependencies": {
