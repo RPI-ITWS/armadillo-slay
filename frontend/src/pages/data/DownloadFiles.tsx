@@ -1,21 +1,21 @@
 import React from 'react';
-import './FilterAndSort.css';
+import './buttons.css';
 
 interface DownloadFilesProps {
-  onButtonCClicked: () => void;
-  onButtonDClicked: () => void;
+  onButtonJSONClicked: () => void;
+  onButtonCSVClicked: () => void;
 }
 
-function DownloadFiles({ onButtonCClicked, onButtonDClicked }: DownloadFilesProps) {
+function DownloadFiles({ onButtonJSONClicked, onButtonCSVClicked }: DownloadFilesProps) {
   const handleButtonClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     const buttonName = event.currentTarget.name;
     switch (buttonName) {
-      case 'buttonC':
-        onButtonCClicked();
+      case 'JSON_FileDownload':
+        onButtonJSONClicked();
         break;
 
-      case 'buttonD':
-        onButtonDClicked();
+      case 'CSV_FileDownload':
+        onButtonCSVClicked();
         break;
     
       default:
@@ -25,9 +25,9 @@ function DownloadFiles({ onButtonCClicked, onButtonDClicked }: DownloadFilesProp
 
   return (
     <div className='ButtonsDownload'>
-      <button name="buttonC" className="ReactButton" onClick={handleButtonClick}>JSON File</button>
+      <button name="JSON_FileDownload" className="ReactButton" onClick={handleButtonClick}>JSON File</button>
       &nbsp;
-      <button name="buttonD" className="ReactButton" onClick={handleButtonClick}>CSV File</button>
+      <button name="CSV_FileDownload" className="ReactButton" onClick={handleButtonClick}>CSV File</button>
     </div>
   );
 }
